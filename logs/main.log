@@ -1,1 +1,2 @@
-2019-11-09.15:29:08 INFO  [main] com.niit.web.blog.dao.UserDaoTest.batchInsert:23  批量新增用户成功
+2019-11-09.21:07:28 ERROR [main] com.niit.web.blog.dao.ArticleDao.batchInsert:24  批量新增文章失败
+2019-11-09.21:09:14 ERROR [main] com.niit.web.blog.dao.ArticleDao.batchInsert:24  批量新增文章失败

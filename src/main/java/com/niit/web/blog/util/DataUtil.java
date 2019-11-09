@@ -3,6 +3,7 @@ package com.niit.web.blog.util;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 /**
@@ -27,6 +28,25 @@ public class DataUtil {
         return stringBuilder.toString();
     }
 
+    /**
+     * 随机生成发布作者用户id
+     * @return
+     */
+    public static int getUserid(){
+        Random random = new Random();
+        int sum = random.nextInt(72)+1;
+        return sum;
+    }
+    public static int getComment(){
+        Random random = new Random();
+        int sum = random.nextInt(9999);
+        return sum;
+    }
+    public static int getPraise(){
+        Random random = new Random();
+        int sum = random.nextInt(9999);
+        return sum;
+    }
     /**
      * 生成密码
      * @return
@@ -54,6 +74,19 @@ public class DataUtil {
     }
 
     /**
+     * 随机生成文章发布时间
+     * @return
+     */
+    public static LocalDateTime getPublishtime(){
+        LocalDateTime now = LocalDateTime.now();
+        Random random = new Random();
+        int bound = random.nextInt(8888);
+        return now.minusMinutes(bound);
+    }
+
+
+
+    /**
      * 随机生成性别
      * @return
      */
@@ -63,6 +96,12 @@ public class DataUtil {
         int index = random.nextInt(2);
         return genders[index];
     }
+
+//    public static Long getComment(){
+//
+//    }
+
+
 
 
 
