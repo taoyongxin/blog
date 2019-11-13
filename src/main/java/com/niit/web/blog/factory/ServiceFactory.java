@@ -1,7 +1,10 @@
 package com.niit.web.blog.factory;
 
+import com.niit.web.blog.entity.Address;
+import com.niit.web.blog.service.ArticleService;
 import com.niit.web.blog.service.StudentService;
 import com.niit.web.blog.service.UserService;
+import com.niit.web.blog.service.impl.ArticleServiceImpl;
 import com.niit.web.blog.service.impl.StudentServiceImpl;
 import com.niit.web.blog.service.impl.UserServiceImpl;
 
@@ -19,4 +22,8 @@ public class ServiceFactory {
     public static UserService getUserServiceInstance(){
         return new UserServiceImpl();
     }
+    public static ArticleService getArticleServiceInstance(){
+        return new ArticleServiceImpl();
+    }
+
 }

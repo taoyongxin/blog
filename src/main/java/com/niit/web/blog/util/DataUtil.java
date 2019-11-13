@@ -97,9 +97,7 @@ public class DataUtil {
         return genders[index];
     }
 
-//    public static Long getComment(){
-//
-//    }
+
 
 
 

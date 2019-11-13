@@ -17,6 +17,12 @@ import static org.junit.Assert.*;
 public class ArticleDaoTest {
 //    private static Logger logger = LoggerFactory.getLogger(ArticleDao.class);
     private ArticleDao articleDao = DaoFactory.getArticleDaoInstance();
+
+    @Test
+    public void selectAll() throws SQLException {
+        List<Article> articles = articleDao.selectAll();
+        articles.forEach(article -> System.out.println(article));
+    }
     @Test
     public void batchInsert() throws SQLException {
         List<Article> articles = JSoupSpider.getArticles();

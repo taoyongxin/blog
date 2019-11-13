@@ -1,5 +1,6 @@
 package com.niit.web.blog.util;
 
+import com.niit.web.blog.entity.Address;
 import com.niit.web.blog.entity.Article;
 import com.niit.web.blog.entity.User;
 
@@ -28,19 +29,26 @@ public class JSoupSpider {
     public static void main(String[] args) {
         Document doc;
         try {
-            doc = Jsoup.connect("https://www.jianshu.com/?page=2").get();
-            Elements divs = doc.getElementsByClass("have-img");
+            doc = Jsoup.connect("http://www.ip33.com/area_code.html").get();
+            Elements divs = doc.getElementsByClass("ip");
             System.out.println(divs.size());
             divs.forEach(div -> {
-                Element element = div.children().get(1).children().get(0);
-                Element element1 = div.children().get(1).children().get(1);
-                Element element2 = div.children().get(1).children().get(2).children().get(2).children().get(1);
-                Element img = div.children().get(0).children().get(0);
 
-                System.out.println("https:"+img.attr("src"));
-                System.out.println(element.text());
-                System.out.println(element1.text());
-                System.out.println(element2.text());
+                  Element element1= div.children().get(1).children().get(0).children().get(1);
+                  Element element2= div.children().get(1);
+                  Element element3= div.children().first();
+
+                System.out.println(element1.childNodeSize()/2);
+
+                for (int j=0;j<=(element2.childNodeSize()/2-1);j++) {
+                    for (int i = 0; i <= (element1.childNodeSize() / 2 - 1); i++) {
+                        String str2 = element2.children().get(j).children().first().toString().substring(4, element2.children().get(j).children().first().toString().indexOf(" "));
+                        String str1 = element1.children().get(i).toString().substring(4, element1.children().get(i).toString().indexOf(" "));
+                        String str3 = element3.toString().substring(4,element3.toString().indexOf(" "));
+                        String str4 = str3+str2+str1;
+                        System.out.println(str4);
+                    }
+                }
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -100,5 +108,37 @@ public class JSoupSpider {
             });
         }
         return userList;
+    }
+    public static List<Address> getAddress(){
+        Document document = null;
+        List<Address> addressList = new ArrayList<>(100);
+        try {
+            document = Jsoup.connect("http://www.ip33.com/area_code.html").get();
+        } catch (IOException e) {
+            logger.error("连接失败");
+        }
+        Elements divs = document.getElementsByClass("ip");
+        divs.forEach(div -> {
+
+            Element element1= div.children().get(1).children().get(0).children().get(1);
+            Element element2= div.children().get(1);
+            Element element3= div.children().first();
+
+            System.out.println(element1.childNodeSize()/2);
+
+            for (int j=0;j<=(element2.childNodeSize()/2-1);j++) {
+                for (int i = 0; i <= (element1.childNodeSize() / 2 - 1); i++) {
+                    String str2 = element2.children().get(j).children().first().toString().substring(4, element2.children().get(j).children().first().toString().indexOf(" "));
+                    String str1 = element1.children().get(i).toString().substring(4, element1.children().get(i).toString().indexOf(" "));
+                    String str3 = element3.toString().substring(4,element3.toString().indexOf(" "));
+                    String str4 = str3+str2+str1;
+                    Address address = new Address();
+                    address.setAddress(str4);
+                    addressList.add(address);
+                }
+            }
+        });
+        System.out.println(addressList.size());
+        return addressList;
     }
 }

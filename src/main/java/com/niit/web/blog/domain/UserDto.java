@@ -14,9 +14,9 @@ public class UserDto {
     private String mobile;
     private String password;
 
+
     public UserDto() {
     }
-
     public UserDto(String mobile, String password) {
         this.mobile = mobile;
         this.password = password;

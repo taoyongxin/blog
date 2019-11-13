@@ -1,6 +1,7 @@
 package com.niit.web.blog.dao;
 
 import com.niit.web.blog.entity.Article;
+import com.niit.web.blog.entity.Student;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -20,4 +21,11 @@ public interface ArticleDao {
      * @throws SQLException
      */
     int[] batchInsert(List<Article> articlesList ) throws SQLException;
+
+    /**
+     * 查询所有数据信息
+     * @return
+     * @throws SQLException
+     */
+    List<Article> selectAll() throws SQLException;
 }
