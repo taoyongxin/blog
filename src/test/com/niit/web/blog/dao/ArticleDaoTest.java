@@ -1,5 +1,6 @@
 package com.niit.web.blog.dao;
 
+import com.niit.web.blog.domain.vo.ArticleVo;
 import com.niit.web.blog.entity.Article;
 import com.niit.web.blog.entity.Student;
 import com.niit.web.blog.factory.DaoFactory;
@@ -28,5 +29,11 @@ public class ArticleDaoTest {
         List<Article> articles = JSoupSpider.getArticles();
         int[] result = articleDao.batchInsert(articles);
         System.out.println(result.length);
+    }
+
+    @Test
+    public void selectAuthorNickname() throws SQLException{
+        List<ArticleVo> articleVoList = articleDao.selectAuthorNickName();
+        articleVoList.forEach(a -> System.out.println(a));
     }
 }

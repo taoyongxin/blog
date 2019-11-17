@@ -1,5 +1,6 @@
 package com.niit.web.blog.service;
 
+import com.niit.web.blog.domain.vo.ArticleVo;
 import com.niit.web.blog.entity.Article;
 
 import java.util.List;
@@ -13,4 +14,10 @@ import java.util.List;
  **/
 public interface ArticleService {
     List<Article> listarticle();
+
+    /**
+     * 用id获取用户作者昵称
+     * @return
+     */
+    List<ArticleVo> getAuthorNickName();
 }

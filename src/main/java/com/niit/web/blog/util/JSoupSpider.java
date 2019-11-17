@@ -54,7 +54,7 @@ public class JSoupSpider {
             e.printStackTrace();
         }
     }
-    public static List<Article> getArticles(){
+    /*public static List<Article> getArticles1(){
         Document document = null;
         List<Article> articleList = new ArrayList<>(100);
         for (int j = 1; j <= 3; j++) {
@@ -79,6 +79,51 @@ public class JSoupSpider {
                 articleList.add(article);
             });
         }
+        return articleList;
+    }*/
+    public static List<Article> getArticles(){
+        Document document = null;
+        List<Article> articleList = new ArrayList<>(100);
+        for (int i=1;i<10;i++){
+            try {
+                document = Jsoup.connect("https://www.jianshu.com/c/87b50a03a96e?order_by=top&count=50&page=" + i).get();
+            } catch (IOException e) {
+                logger.error("连接失败");
+            }
+            Elements divs = document.getElementsByClass("have-img");
+            divs.forEach(div ->{
+                String articleUrl = div.child(0).attr("href");
+                Document document1 = null;
+                try {
+                    document1 = Jsoup.connect("https://www.jianshu.com" + articleUrl).get();
+                } catch (IOException e) {
+                    logger.error("连接失败");
+                }
+                Element articleElement = document1.getElementsByClass("_2rhmJa").first();
+                Article article = new Article();
+                article.setContent(articleElement.html());
+                article.setContent(articleElement.html());
+                Elements elements = div.children();
+                Element linkElement = elements.get(0);
+                Element divElement = elements.get(1);
+                article.setTitle(divElement.child(0).text());
+                String img = "https:" + linkElement.child(0).attr("src");
+                int index = img.indexOf("?");
+                article.setArticle_pic(img.substring(0, index));
+                article.setSummary(divElement.child(1).text());
+                /*article.setComment(DataUtil.getComment());
+                article.setPraise(DataUtil.getPraise());*/
+                Elements metaChildren = divElement.child(2).children();
+                String comments = metaChildren.get(2).text();
+                String likes = metaChildren.last().text();
+                article.setComment(Integer.parseInt(comments));
+                article.setPraise(Integer.parseInt(likes));
+                article.setUser_id(DataUtil.getUser_id());
+                article.setCreat_time(DataUtil.getPublishtime());
+                articleList.add(article);
+            });
+        }
+        System.out.println(articleList.size());
         return articleList;
     }
     public static List<User> getUsers() {

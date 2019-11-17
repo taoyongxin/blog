@@ -1,5 +1,6 @@
 package com.niit.web.blog.dao;
 
+import com.niit.web.blog.domain.vo.ArticleVo;
 import com.niit.web.blog.entity.Article;
 import com.niit.web.blog.entity.Student;
 
@@ -28,4 +29,5 @@ public interface ArticleDao {
      * @throws SQLException
      */
     List<Article> selectAll() throws SQLException;
+    List<ArticleVo> selectAuthorNickName() throws SQLException;
 }

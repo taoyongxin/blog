@@ -33,7 +33,5 @@ public class StudentController extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.print(gson.toJson(students));
         out.close();
-
-
     }
 }

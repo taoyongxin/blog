@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,5 +44,10 @@ public class UserServiceImpl implements UserService {
         }
         return map;
 
+    }
+
+    @Override
+    public List<User> listUser() {
+        return null;
     }
 }

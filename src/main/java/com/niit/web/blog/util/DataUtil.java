@@ -32,7 +32,7 @@ public class DataUtil {
      * 随机生成发布作者用户id
      * @return
      */
-    public static int getUserid(){
+    public static int getUser_id(){
         Random random = new Random();
         int sum = random.nextInt(72)+1;
         return sum;
