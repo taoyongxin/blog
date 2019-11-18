@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -79,5 +80,28 @@ public class UserDaoImpl implements UserDao {
             user.setStatus(rs.getShort("status"));
         }
         return user;
+    }
+
+    /**
+     * 查询所有用户
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public List<User> selectAll() throws SQLException {
+        List<User> userList = new ArrayList<>();
+        Connection connection = DbUtil.getConnection();
+        String sql ="SELECT * FROM t_user ORDER BY id DESC";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery();
+        while(rs.next()){
+            User user = new User();
+            user.setId(rs.getLong("id"));
+            user.setNickname(rs.getString("nickname"));
+            user.setAvatar(rs.getString("avatar"));
+            user.setIntroduction(rs.getString("introduction"));
+            userList.add(user);
+        }
+        return userList;
     }
 }

@@ -58,10 +58,7 @@ public class UserController extends HttpServlet {
         out.close();
     }
 
-    @Override
-    public void init() throws ServletException {
-        logger.info("UserController初始化");
-    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserService userService= ServiceFactory.getUserServiceInstance();
@@ -78,5 +75,9 @@ public class UserController extends HttpServlet {
         PrintWriter out=resp.getWriter();
         out.print(gson.toJson(ro));
         out.close();
+    }
+    @Override
+    public void init() throws ServletException {
+        logger.info("UserController初始化");
     }
 }

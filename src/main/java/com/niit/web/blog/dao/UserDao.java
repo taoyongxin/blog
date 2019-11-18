@@ -24,4 +24,11 @@ public interface UserDao {
      * 根据手机号查找用户
      */
     User findUserByMobile(String mobile)throws SQLException;
+
+    /**
+     * 查看所有用户
+     * @return
+     * @throws SQLException
+     */
+    List<User> selectAll() throws SQLException;
 }

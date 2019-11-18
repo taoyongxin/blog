@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> listUser() {
-        return null;
+        List<User> users = null;
+        try {
+            users = userDao.selectAll();
+        } catch (SQLException e) {
+            System.err.println("查询用户操作失败");
+        }
+        return users;
     }
+
+
 }

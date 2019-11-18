@@ -2,8 +2,10 @@ package com.niit.web.blog.util;
 
 import com.niit.web.blog.entity.Address;
 import com.niit.web.blog.entity.Article;
+import com.niit.web.blog.entity.Topic;
 import com.niit.web.blog.entity.User;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -185,5 +187,44 @@ public class JSoupSpider {
         });
         System.out.println(addressList.size());
         return addressList;
+    }
+    public static List<Topic> getTopics(){
+        List<Topic> topicList= new ArrayList<>(100);
+        Connection connection;
+        Document document = null;
+        for (int i=1 ; i<=3; i++){
+            try {
+                connection = Jsoup.connect("https://www.jianshu.com/recommendations/collections?order_by=hot&page=" + i);
+                connection.header("X-PJAX","true");
+                document = connection.get();
+            } catch (IOException e) {
+                logger.error("连接失败");
+            }
+            assert document != null;
+            Elements list = document.select(".collection-wrap");
+            list.forEach(item -> {
+                Elements elements = item.children();
+                Topic topic = new Topic();
+                Element link = elements.select("a").get(0);
+                Element logo = link.child(0);
+                Element name = link.child(1);
+                Element description = link.child(2);
+                Element articles = elements.select(".count > a").get(0);
+                Element follows = elements.select(".count > a").get(0);
+                topic.setAdmin_id(DataUtil.getUserId());
+                topic.setName(name.text());
+                topic.setLogo(logo.attr("src"));
+                topic.setDescription(description.text());
+                String[] str = StringUtil.getDigital(articles.text());
+                topic.setArticles(Integer.parseInt(str[0]));
+                str = StringUtil.getDigital(follows.text());
+                topic.setFollows(Integer.parseInt(str[0]));
+                topic.setCreate_time(DataUtil.getPublishtime());
+                topicList.add(topic);
+            });
+
+        }
+        return topicList;
+
     }
 }

@@ -1,5 +1,6 @@
 package com.niit.web.blog.dao;
 
+import com.niit.web.blog.entity.User;
 import com.niit.web.blog.factory.DaoFactory;
 import com.niit.web.blog.util.JSoupSpider;
 import org.junit.Test;
@@ -7,8 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
-
-
+import java.util.List;
 
 
 public class UserDaoTest {
@@ -26,5 +26,11 @@ public class UserDaoTest {
            logger.error("批量新增用户失败");
 
         }
+    }
+
+    @Test
+    public void selectAll() throws SQLException {
+        List<User> users = userDao.selectAll();
+        users.forEach(user -> System.out.println(user));
     }
 }

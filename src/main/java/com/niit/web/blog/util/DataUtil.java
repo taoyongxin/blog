@@ -97,6 +97,13 @@ public class DataUtil {
         return genders[index];
     }
 
+    public static Long getUserId(){
+        Random random = new Random();
+        long bound = random.nextInt(61);
+        return bound;
+    }
+
+
 
 
 
