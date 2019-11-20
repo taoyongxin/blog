@@ -6,75 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fbdadeba-9b79-4c0b-a4a3-158c656f5b02" name="Default Changelist" comment="爬取简书网专题">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/controller/CodeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/controller/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/controller/TopicController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/controller/UploadController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/controller/VideoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/listener/MySessionContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/listener/SessionListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/service/TopicService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/service/impl/TopicServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/util/CodeUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/util/FileCopy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/util/ImageUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/util/Result.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/util/ResultCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/login.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/upload.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/blog/1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/controller/CodeController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/controller/LoginController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/controller/TopicController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/controller/UploadController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/controller/VideoController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/listener/MySessionContext.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/listener/SessionListener.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/service/TopicService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/service/impl/TopicServiceImpl.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/util/CodeUtil.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/util/FileCopy.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/util/ImageUtil.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/blog/index.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/blog/login.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/blog/upload.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/controller/CodeController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/controller/LoginController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/controller/TopicController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/controller/UploadController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/controller/VideoController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/listener/MySessionContext.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/listener/SessionListener.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/service/TopicService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/service/impl/TopicServiceImpl.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/util/CodeUtil.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/util/FileCopy.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/util/ImageUtil.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/util/Result.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/util/ResultCode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/dao/impl/TopicDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/dao/impl/TopicDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/factory/ServiceFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/factory/ServiceFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/util/DataUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/util/DataUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/util/GraphicHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/util/GraphicHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/util/StringUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/util/StringUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/com/niit/web/blog/dao/TopicDaoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/com/niit/web/blog/dao/TopicDaoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/dao/TopicDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/dao/TopicDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/dao/impl/TopicDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/dao/impl/TopicDaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/factory/ServiceFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/factory/ServiceFactory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/util/DataUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/util/DataUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/util/GraphicHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/blog/WEB-INF/classes/com/niit/web/blog/util/GraphicHelper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/blog/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/blog/WEB-INF/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/niit/web/blog/dao/TopicDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/dao/TopicDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/niit/web/blog/dao/impl/TopicDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/dao/impl/TopicDaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/niit/web/blog/factory/ServiceFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/factory/ServiceFactory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/niit/web/blog/util/DataUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/util/DataUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/niit/web/blog/util/GraphicHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/niit/web/blog/util/GraphicHelper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/niit/web/blog/dao/TopicDaoTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/niit/web/blog/dao/TopicDaoTest.class" afterDir="false" />
-    </list>
+    <list default="true" id="fbdadeba-9b79-4c0b-a4a3-158c656f5b02" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -381,7 +313,7 @@
       <workItem from="1574207614591" duration="9787000" />
       <workItem from="1574228672297" duration="1956000" />
       <workItem from="1574254456459" duration="5580000" />
-      <workItem from="1574263164895" duration="358000" />
+      <workItem from="1574263164895" duration="560000" />
     </task>
     <task id="LOCAL-00001" summary="文章获取数据库">
       <created>1573314476409</created>
@@ -411,7 +343,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574089543819</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="枚举全局管理API状态码、上传文件、登录验证码">
+      <created>1574263569604</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1574263569604</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -435,6 +374,7 @@
     <MESSAGE value="书籍信息后台获取" />
     <MESSAGE value="文章表与用户表联查" />
     <MESSAGE value="爬取简书网专题" />
-    <option name="LAST_COMMIT_MESSAGE" value="爬取简书网专题" />
+    <MESSAGE value="枚举全局管理API状态码、上传文件、登录验证码" />
+    <option name="LAST_COMMIT_MESSAGE" value="枚举全局管理API状态码、上传文件、登录验证码" />
   </component>
 </project>
