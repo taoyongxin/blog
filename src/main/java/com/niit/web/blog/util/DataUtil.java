@@ -28,6 +28,16 @@ public class DataUtil {
         return stringBuilder.toString();
     }
 
+    public static String getCode(){
+        StringBuilder stringBuilder = new StringBuilder();
+        Random random = new Random();
+        for (int i=0;i<4;i++){
+            int num = random.nextInt(10);
+            stringBuilder.append(num);
+        }
+        return stringBuilder.toString();
+    }
+
     /**
      * 随机生成发布作者用户id
      * @return

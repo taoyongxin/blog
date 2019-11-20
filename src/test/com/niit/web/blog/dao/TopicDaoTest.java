@@ -19,4 +19,10 @@ public class TopicDaoTest {
         int[] result = topicDao.bathInsert(topics);
         System.out.println(result.length);
     }
+
+    @Test
+    public void selectHotTopics() throws SQLException{
+        List<Topic> topicList = topicDao.selectHotTopics();
+        System.out.println(topicList.size());
+    }
 }

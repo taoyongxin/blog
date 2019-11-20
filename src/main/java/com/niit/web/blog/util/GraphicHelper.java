@@ -1,14 +1,11 @@
 package com.niit.web.blog.util;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Random;
-
-import javax.imageio.ImageIO;
 
 public final class GraphicHelper {
 
@@ -32,7 +29,7 @@ public final class GraphicHelper {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics graphic = image.getGraphics();
 
-        graphic.setColor(Color.getColor("F8F8F8"));
+        graphic.setColor(Color.getColor("F8F8F8"));//setBackground 設置背景 setPaint
         graphic.fillRect(0, 0, width, height);//画矩形着色块
 
         Color[] colors = new Color[] { Color.BLUE, Color.GRAY, Color.GREEN, Color.RED, Color.BLACK, Color.ORANGE,
@@ -52,6 +49,8 @@ public final class GraphicHelper {
 
         // 在 "画板"上绘制字母
         graphic.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
+
+
         for (int i = 0; i < 6; i++) {
             final int temp = random.nextInt(26) + 97;
             String s = String.valueOf((char) temp);

@@ -56,11 +56,7 @@ public class TopicDaoImpl implements TopicDao {
         String sql = "SELECT * FROM t_topic ORDER BY follows DESC LIMIT 10 ";
         PreparedStatement pstmt = connection.prepareStatement(sql);
         ResultSet rs = pstmt.executeQuery();
-        return convert(rs);
-    }
-
-    private List<Topic> convert(ResultSet rs){
-        List<Topic> topicList = new ArrayList<>(50);
+        List<Topic> topicList = new ArrayList<>(100);
         try {
             while(rs.next()){
                 Topic topic = new Topic();
@@ -77,6 +73,7 @@ public class TopicDaoImpl implements TopicDao {
         }catch (SQLException e){
             logger.error("查询专题数据产生异常");
         }
+        DbUtil.close(rs,pstmt,connection);
         return topicList;
     }
 }
