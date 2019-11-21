@@ -27,26 +27,28 @@ public class UploadController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Collection<Part> parts = req.getParts();
-        for (Part part : parts) {
-            String name = part.getSubmittedFileName();
-            System.out.println(name);
-            String path = req.getSession().getServletContext().getRealPath("");
-            System.out.println(path);
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-            String time = df.format(new Date());
-            System.out.println(time);
-            File dif = new File(path+time);
-            dif.mkdirs();
-            System.out.println("此刻目录："+path+time);
-
-            int i=name.indexOf(".");
-            String name1 = name.substring(i,name.length());
-
-            part.write(path+time+"\\"+ UUID.randomUUID()+name1);
-            System.out.println(path + time+"\\"+name);
-            req.setAttribute("msg","上传成功！");
-            req.getRequestDispatcher("/upload.jsp").forward(req,resp);
+        long current = System.currentTimeMillis();
+        String time = new SimpleDateFormat("yyyy-MM-dd").format(new Date(current));
+        System.out.println(time);
+        String path = req.getSession().getServletContext().getRealPath("/") + time;
+        System.out.println(path);
+        File f = new File(path);
+        if (!f.exists()) {
+            f.mkdirs();
         }
-
+        for (Part part : parts) {
+            long max = 1024 * 1024 * 1;
+            if (part.getSize() < max) {
+                String contentType = part.getContentType();
+                String fileName = part.getSubmittedFileName();
+                String fileExtName = fileName.substring(fileName.lastIndexOf(".") - 1);
+                part.write(f.getPath() + "/" + UUID.randomUUID().toString() + fileExtName);
+                req.setAttribute("msg", "上传成功");
+            } else {
+                req.setAttribute("msg", "上传失败");
+            }
+        }
+        resp.setContentType("image/jpeg");
+        req.getRequestDispatcher("/upload.jsp").forward(req, resp);
     }
 }
