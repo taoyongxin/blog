@@ -6,7 +6,16 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fbdadeba-9b79-4c0b-a4a3-158c656f5b02" name="Default Changelist" comment="" />
+    <list default="true" id="fbdadeba-9b79-4c0b-a4a3-158c656f5b02" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/controller/UploadController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/controller/UploadController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/util/DataUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/niit/web/blog/util/DataUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/upload.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/upload.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/blog/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/blog/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/blog/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/blog/upload.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/blog/upload.jsp" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,16 +90,16 @@
       <recent name="com.niit.web.blog.service.impl" />
       <recent name="com.niit.web.blog.dao.impl" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\JavaWeb\blog\src\main\java\com\niit\web\blog\listener" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\JavaWeb\blog\src\main\java\com\niit\web\blog\entity" />
       <recent name="E:\JavaWeb\blog\src\main\java\com\niit\web\blog\util" />
       <recent name="E:\JavaWeb\blog\src\main\resources" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\JavaWeb\blog\src\main\java\com\niit\web\blog\entity" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\JavaWeb\blog\src\main\java\com\niit\web\blog\listener" />
       <recent name="E:\JavaWeb\blog\src\main\java\com\niit\web\blog\util" />
       <recent name="E:\JavaWeb\blog\src\main\resources" />
     </key>
@@ -107,7 +116,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ResultCode">
+  <component name="RunManager" selected="Tomcat Server.blog">
     <configuration name="CodeUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.niit.web.blog.util.CodeUtil" />
       <module name="blog" />
@@ -314,6 +323,8 @@
       <workItem from="1574228672297" duration="1956000" />
       <workItem from="1574254456459" duration="5580000" />
       <workItem from="1574263164895" duration="560000" />
+      <workItem from="1574263778875" duration="233000" />
+      <workItem from="1574335499351" duration="10749000" />
     </task>
     <task id="LOCAL-00001" summary="文章获取数据库">
       <created>1573314476409</created>
@@ -350,7 +361,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574263569604</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="枚举全局管理API状态码、上传文件、登录验证码">
+      <created>1574263920134</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1574263920134</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

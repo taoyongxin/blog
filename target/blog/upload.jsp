@@ -14,7 +14,7 @@
 </head>
 <body>
 <form action="/api/upload" method="post" enctype="multipart/form-data">
-    <input type="file" name="filename">
+    <input type="file" name="filename" multiple>
     <input type="submit" value="上传">
 </form>
 <p>${ msg}</p>
