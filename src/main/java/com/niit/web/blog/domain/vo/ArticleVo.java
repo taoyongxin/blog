@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * @author Tao
  * @ClassName ArticleVo
- * @Description 文章视图类
+ * @Description 文章视图类,文章表和用户表的双表联查出前端所需表的数据信息
  * @Date 2019/11/17
  * @Version 1.0
  **/

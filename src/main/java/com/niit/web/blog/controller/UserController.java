@@ -2,7 +2,7 @@ package com.niit.web.blog.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.niit.web.blog.domain.UserDto;
+import com.niit.web.blog.domain.dto.UserDto;
 import com.niit.web.blog.entity.User;
 import com.niit.web.blog.factory.ServiceFactory;
 import com.niit.web.blog.service.UserService;

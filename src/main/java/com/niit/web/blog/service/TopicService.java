@@ -17,4 +17,12 @@ public interface TopicService {
      * @return
      */
     List<Topic> listtopic();
+
+    /**
+     * 根据id获取专题的详细信息
+     * @param id
+     * @return
+     */
+//    Result getTopic(long id);
+
 }

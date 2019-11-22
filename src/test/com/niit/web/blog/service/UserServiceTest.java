@@ -1,12 +1,10 @@
 package com.niit.web.blog.service;
 
-import com.niit.web.blog.domain.UserDto;
+import com.niit.web.blog.domain.dto.UserDto;
 import com.niit.web.blog.factory.ServiceFactory;
 import org.junit.Test;
 
 import java.util.Map;
-
-import static org.junit.Assert.*;
 
 public class UserServiceTest {
     private UserService userService = ServiceFactory.getUserServiceInstance();

@@ -1,7 +1,7 @@
 package com.niit.web.blog.service.impl;
 
 import com.niit.web.blog.dao.UserDao;
-import com.niit.web.blog.domain.UserDto;
+import com.niit.web.blog.domain.dto.UserDto;
 import com.niit.web.blog.entity.User;
 import com.niit.web.blog.factory.DaoFactory;
 import com.niit.web.blog.service.UserService;
@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

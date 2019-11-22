@@ -1,6 +1,7 @@
 package com.niit.web.blog.dao.impl;
 
 import com.niit.web.blog.dao.TopicDao;
+import com.niit.web.blog.domain.vo.TopicVo;
 import com.niit.web.blog.entity.Topic;
 import com.niit.web.blog.util.DbUtil;
 import org.slf4j.Logger;
@@ -75,5 +76,32 @@ public class TopicDaoImpl implements TopicDao {
         }
         DbUtil.close(rs,pstmt,connection);
         return topicList;
+    }
+
+    @Override
+    public TopicVo getTopic(long id) throws SQLException {
+        Connection connection = DbUtil.getConnection();
+        String sql = "SELECT a.*,b.nickname,b.avatar "+
+                "FROM t_topic a "+
+                "LEFT JOIN t_user b "+
+                "ON a.admin_id = b.id "+
+                "WHERE a.id = ? ";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setLong(1,id);
+        ResultSet rs = pstmt.executeQuery();
+        TopicVo topicVo = null;
+        if(rs.next()){
+            topicVo = new TopicVo();
+            topicVo.setId(rs.getLong("id"));
+            topicVo.setAdmin_id(rs.getLong("admin_id"));
+            topicVo.setName(rs.getString("name"));
+            topicVo.setLogo(rs.getString("logo"));
+            topicVo.setDescription(rs.getString("description"));
+            topicVo.setArticles(rs.getInt("articles"));
+            topicVo.setFollows(rs.getInt("follows"));
+            topicVo.setCreate_time(rs.getTimestamp("create_time").toLocalDateTime());
+        }
+        DbUtil.close(rs,pstmt, connection);
+        return topicVo;
     }
 }

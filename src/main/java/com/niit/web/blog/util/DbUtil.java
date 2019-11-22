@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 /**
@@ -21,6 +22,7 @@ public class DbUtil {
     private static String PASSWORD;
     private static Connection conn = null;
     private static final Logger logger = LoggerFactory.getLogger(DbUtil.class);
+    private static Properties properties;
 
 
     /**

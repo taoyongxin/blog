@@ -1,9 +1,11 @@
 package com.niit.web.blog.service.impl;
 
 import com.niit.web.blog.dao.TopicDao;
+import com.niit.web.blog.domain.vo.TopicVo;
 import com.niit.web.blog.entity.Topic;
 import com.niit.web.blog.factory.DaoFactory;
 import com.niit.web.blog.service.TopicService;
+import com.niit.web.blog.util.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,4 +33,6 @@ public class TopicServiceImpl implements TopicService {
         }
         return topics;
     }
+
+
 }

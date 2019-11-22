@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author mq_xu
+ * @author tao
  * @ClassName JSoupSpider
  * @Description JSoup实现的一个爬虫工具
  * @Date 9:13 2019/11/7
