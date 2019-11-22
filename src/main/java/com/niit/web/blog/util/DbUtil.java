@@ -66,27 +66,68 @@ public class DbUtil {
     }
 
     /**
-     * 关闭数据库连接
-     *
-     * @param rs
-     * @param stat
-     * @param conn
+     * 关闭Connection
+     * @param connection
      */
-    public static void close(ResultSet rs, Statement stat, Connection conn) {
-        try {
-            if (rs != null) {
-                rs.close();
+    public  static void close(Connection connection){
+        if(connection != null){
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-            if (stat != null) {
-                stat.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
+
+    /**
+     * 关闭 Statement
+     * @param statement
+     */
+    public static void close(Statement statement){
+        if (statement != null){
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 关闭ResultSet
+     * @param resultSet
+     */
+    public static void close(ResultSet resultSet){
+        if(resultSet != null){
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 关闭Connection和Statement
+     * @param connection
+     * @param statement
+     */
+    public static void close(Connection connection,Statement statement){
+        close(connection);
+        close(statement);
+    }
+
+    /**
+     * 关闭Connection ， Statement以及ResultSet
+     * @param resultSet
+     * @param statement
+     * @param connection
+     */
+    public static void close(ResultSet resultSet, Statement statement, Connection connection) {
+        close(connection,statement);
+        close(resultSet);
+    }
+
 
     public static void main(String[] args) {
         Connection connection = null;

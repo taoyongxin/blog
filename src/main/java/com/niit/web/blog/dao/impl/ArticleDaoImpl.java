@@ -3,10 +3,12 @@ package com.niit.web.blog.dao.impl;
 import com.niit.web.blog.dao.ArticleDao;
 import com.niit.web.blog.domain.vo.ArticleVo;
 import com.niit.web.blog.entity.Article;
-import com.niit.web.blog.entity.Student;
 import com.niit.web.blog.util.DbUtil;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class ArticleDaoImpl implements ArticleDao {
     public int[] batchInsert(List<Article> articlesList) throws SQLException {
         Connection connection = DbUtil.getConnection();
         connection.setAutoCommit(false);
-        String sql = "INSERT INTO t_article (title,article_pic,comment,praise,user_id,creat_time,summary,content) VALUES (?,?,?,?,?,?,?,?) ";
+        String sql = "INSERT INTO t_article (title,article_pic,comment,praise,user_id,creat_time,summary,content,topic_id) VALUES (?,?,?,?,?,?,?,?,? ) ";
         PreparedStatement pstmt = connection.prepareStatement(sql);
         articlesList.forEach(article -> {
             try {
@@ -34,6 +36,7 @@ public class ArticleDaoImpl implements ArticleDao {
                 pstmt.setObject(6, article.getCreat_time());
                 pstmt.setString(7, article.getSummary());
                 pstmt.setString(8, article.getContent());
+                pstmt.setLong(9,article.getTopic_id());
                 pstmt.addBatch();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -42,8 +45,7 @@ public class ArticleDaoImpl implements ArticleDao {
         int[] result = pstmt.executeBatch();
         //别忘记提交
         connection.commit();
-        pstmt.close();
-        connection.close();
+        DbUtil.close(connection,pstmt);
         return result;
     }
 

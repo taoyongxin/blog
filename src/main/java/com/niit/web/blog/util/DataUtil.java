@@ -113,6 +113,13 @@ public class DataUtil {
         return bound;
     }
 
+    public static Long getTopicId(){
+        Random random = new Random();
+        long bound = random.nextInt(72)+1;
+        return bound;
+    }
+
+
 
 
 

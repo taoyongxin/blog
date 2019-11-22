@@ -122,6 +122,7 @@ public class JSoupSpider {
                 article.setPraise(Integer.parseInt(likes));
                 article.setUser_id(DataUtil.getUser_id());
                 article.setCreat_time(DataUtil.getPublishtime());
+                article.setTopic_id( DataUtil.getTopicId());
                 articleList.add(article);
             });
         }

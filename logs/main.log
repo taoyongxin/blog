@@ -1,1 +1,5 @@
-2019-11-13.17:03:29 INFO  [main] com.niit.web.blog.dao.AddressDao.batchInsert:22  批量新增用户成功
+2019-11-22.19:14:18 ERROR [main] com.niit.web.blog.util.JSoupSpider.lambda$getArticles$1:102  连接失败
+2019-11-22.19:17:36 ERROR [main] com.niit.web.blog.util.JSoupSpider.lambda$getArticles$1:102  连接失败
+2019-11-22.19:35:56 ERROR [main] com.niit.web.blog.util.JSoupSpider.lambda$getArticles$1:102  连接失败
+2019-11-22.19:37:54 ERROR [main] com.niit.web.blog.util.JSoupSpider.lambda$getArticles$1:102  连接失败
+2019-11-22.19:42:05 ERROR [main] com.niit.web.blog.util.JSoupSpider.lambda$getArticles$1:102  连接失败
