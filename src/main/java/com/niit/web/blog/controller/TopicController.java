@@ -6,6 +6,8 @@ import com.niit.web.blog.entity.Topic;
 import com.niit.web.blog.factory.ServiceFactory;
 import com.niit.web.blog.service.TopicService;
 import com.niit.web.blog.util.ResponseObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,14 +25,53 @@ import java.util.List;
  * @Date 2019/11/20
  * @Version 1.0
  **/
-@WebServlet(urlPatterns = "/api/topic")
+@WebServlet(urlPatterns = {"/api/topic","/api/topic/all"})
 public class TopicController extends HttpServlet {
+    TopicService topicService = ServiceFactory.getTopicServiceInstance();
+    private static Logger logger = LoggerFactory.getLogger(TopicController.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        TopicService topicService = ServiceFactory.getTopicServiceInstance();
+        String reqPath = req.getRequestURI().trim();
+        System.out.println(reqPath);
+        if (reqPath.equals("/api/topic")){
+            getHotTopic(req,resp);
+        }
+        else if (reqPath.equals("/api/topic/all")){
+            getAllTopic(req,resp);
+        }
+//        List<Topic> topics = topicService.listtopic();
+//        Gson gson = new GsonBuilder().create();
+//        ResponseObject ro = new ResponseObject();
+//        ro.setCode(resp.getStatus());
+//        if (resp.getStatus()==200){
+//            ro.setMsg("请求成功");
+//        }else {
+//            ro.setMsg("请求失败");
+//        }
+//        ro.setData(topics);
+//        PrintWriter out = resp.getWriter();
+//        out.print(gson.toJson(ro));
+//        out.close();
+    }
+    private void getHotTopic(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         List<Topic> topics = topicService.listtopic();
-        Gson gson = new GsonBuilder().create();
         ResponseObject ro = new ResponseObject();
+        Gson gson = new GsonBuilder().create();
+        ro.setCode(resp.getStatus());
+        if (resp.getStatus()==200){
+            ro.setMsg("请求成功");
+        }else {
+            ro.setMsg("请求失败");
+        }
+        ro.setData(topics);
+        PrintWriter out = resp.getWriter();
+        out.print(gson.toJson(ro));
+        out.close();
+    }
+    private void getAllTopic(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        List<Topic> topics = topicService.ListAllTopic();
+        ResponseObject ro = new ResponseObject();
+        Gson gson = new GsonBuilder().create();
         ro.setCode(resp.getStatus());
         if (resp.getStatus()==200){
             ro.setMsg("请求成功");

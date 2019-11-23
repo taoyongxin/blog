@@ -13,10 +13,12 @@ import java.util.List;
  **/
 public interface TopicService {
     /**
-     * 热门专题
+     * 热门前十专题
      * @return
      */
     List<Topic> listtopic();
+
+    List<Topic> ListAllTopic();
 
     /**
      * 根据id获取专题的详细信息

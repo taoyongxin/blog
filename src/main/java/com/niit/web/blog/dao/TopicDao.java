@@ -23,7 +23,7 @@ public interface TopicDao {
     int[] bathInsert(List<Topic> topicList) throws SQLException;
 
     /**
-     * 查询热门专题
+     * 查询热门前十个专题
      * @return
             * @throws SQLException
      */
@@ -37,5 +37,11 @@ public interface TopicDao {
      */
     TopicVo getTopic(long id) throws SQLException;
 
+    /**
+     * 查询所有专题
+     * @return
+     * @throws SQLException
+     */
+    List<Topic> selectAllTopic() throws SQLException;
 
 }

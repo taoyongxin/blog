@@ -17,7 +17,7 @@ import java.util.List;
 public class TopicVo {
     private Long id;
     private Long admin_id;
-    private String name;
+    private String topic_name;
     private String logo;
     private String description;
     private Integer articles;

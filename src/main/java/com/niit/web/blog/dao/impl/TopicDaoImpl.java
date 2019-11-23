@@ -29,12 +29,12 @@ public class TopicDaoImpl implements TopicDao {
     public int[] bathInsert(List<Topic> topicList) throws SQLException {
         Connection connection = DbUtil.getConnection();
         connection.setAutoCommit(false);
-        String sql = "INSERT INTO t_topic (admin_id,name,logo,description,articles,follows,create_time) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO t_topic (admin_id,topic_name,logo,description,articles,follows,create_time) VALUES (?,?,?,?,?,?,?)";
         PreparedStatement pstmt = connection.prepareStatement(sql);
         topicList.forEach(topic -> {
             try {
                 pstmt.setLong(1,topic.getAdmin_id());
-                pstmt.setString(2,topic.getName());
+                pstmt.setString(2,topic.getTopic_name());
                 pstmt.setString(3,topic.getLogo());
                 pstmt.setString(4,topic.getDescription());
                 pstmt.setInt(5,topic.getArticles());
@@ -63,7 +63,7 @@ public class TopicDaoImpl implements TopicDao {
                 Topic topic = new Topic();
                 topic.setId(rs.getLong("id"));
                 topic.setAdmin_id(rs.getLong("admin_id"));
-                topic.setName(rs.getString("name"));
+                topic.setTopic_name(rs.getString("topic_name"));
                 topic.setLogo(rs.getString("logo"));
                 topic.setDescription(rs.getString("description"));
                 topic.setArticles(rs.getInt("articles"));
@@ -94,7 +94,7 @@ public class TopicDaoImpl implements TopicDao {
             topicVo = new TopicVo();
             topicVo.setId(rs.getLong("id"));
             topicVo.setAdmin_id(rs.getLong("admin_id"));
-            topicVo.setName(rs.getString("name"));
+            topicVo.setTopic_name(rs.getString("topic_name"));
             topicVo.setLogo(rs.getString("logo"));
             topicVo.setDescription(rs.getString("description"));
             topicVo.setArticles(rs.getInt("articles"));
@@ -104,4 +104,27 @@ public class TopicDaoImpl implements TopicDao {
         DbUtil.close(rs,pstmt, connection);
         return topicVo;
     }
+
+    @Override
+    public List<Topic> selectAllTopic() throws SQLException {
+        List<Topic> topicList = new ArrayList<>();
+        Connection connection = DbUtil.getConnection();
+        String sql = "SELECT * FROM t_topic ORDER BY id DESC ";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery();
+        while (rs.next()){
+            Topic topic = new Topic();
+            topic.setId(rs.getLong("id"));
+            topic.setAdmin_id(rs.getLong("admin_id"));
+            topic.setTopic_name(rs.getString("topic_name"));
+            topic.setLogo(rs.getString("logo"));
+            topic.setDescription(rs.getString("description"));
+            topic.setArticles(rs.getInt("articles"));
+            topic.setFollows(rs.getInt("follows"));
+            topic.setCreate_time(rs.getTimestamp("create_time").toLocalDateTime());
+            topicList.add(topic);
+        }
+        return topicList;
+    }
+
 }

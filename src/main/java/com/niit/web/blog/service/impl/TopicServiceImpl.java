@@ -1,11 +1,9 @@
 package com.niit.web.blog.service.impl;
 
 import com.niit.web.blog.dao.TopicDao;
-import com.niit.web.blog.domain.vo.TopicVo;
 import com.niit.web.blog.entity.Topic;
 import com.niit.web.blog.factory.DaoFactory;
 import com.niit.web.blog.service.TopicService;
-import com.niit.web.blog.util.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +27,18 @@ public class TopicServiceImpl implements TopicService {
         try {
             topics = topicDao.selectHotTopics();
         } catch (SQLException e) {
-            logger.error("查询所有专题用户失败");
+            logger.error("查询所有热门前十专题失败");
+        }
+        return topics;
+    }
+
+    @Override
+    public List<Topic> ListAllTopic() {
+        List<Topic> topics = null;
+        try {
+            topics = topicDao.selectAllTopic();
+        } catch (SQLException e) {
+            logger.error("查询所有专题失败");
         }
         return topics;
     }

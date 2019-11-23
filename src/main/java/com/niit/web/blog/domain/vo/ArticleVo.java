@@ -2,6 +2,8 @@ package com.niit.web.blog.domain.vo;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
  * @author Tao
  * @ClassName ArticleVo
@@ -13,11 +15,16 @@ import lombok.Data;
 public class ArticleVo {
     private Long id;
     private Long user_id;
+    private Long topic_id;
     private String nickname;
     private String avatar;
     private String title;
     private String summary;
     private String article_pic;
+    private String content;
     private Integer comment;
     private Integer praise;
+    private String topic_name;
+    private String logo;
+    private LocalDateTime create_time;
 }

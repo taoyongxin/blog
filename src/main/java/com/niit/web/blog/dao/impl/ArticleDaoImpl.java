@@ -4,6 +4,8 @@ import com.niit.web.blog.dao.ArticleDao;
 import com.niit.web.blog.domain.vo.ArticleVo;
 import com.niit.web.blog.entity.Article;
 import com.niit.web.blog.util.DbUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,6 +22,7 @@ import java.util.List;
  * @Version 1.0
  **/
 public class ArticleDaoImpl implements ArticleDao {
+    private static Logger logger = LoggerFactory.getLogger(ArticleDaoImpl.class);
     @Override
     public int[] batchInsert(List<Article> articlesList) throws SQLException {
         Connection connection = DbUtil.getConnection();
@@ -72,6 +75,7 @@ public class ArticleDaoImpl implements ArticleDao {
             article.setCreat_time(rs.getTimestamp("creat_time").toLocalDateTime());
             article.setSummary(rs.getString("summary"));
             article.setContent(rs.getString("content"));
+            article.setTopic_id(rs.getLong("topic_id"));
             articleList.add(article);
         }
         return articleList;
@@ -104,4 +108,40 @@ public class ArticleDaoImpl implements ArticleDao {
         }
         return  articleVoList;
     }
+
+    @Override
+    public ArticleVo getArticle(long id) throws SQLException {
+        Connection connection = DbUtil.getConnection();
+        String sql = "SELECT a.*,b.topic_name,b.logo,c.nickname,c.avatar "+
+                "FROM t_article a " +
+                "LEFT JOIN t_topic b " +
+                "ON a.topic_id = b.id " +
+                "LEFT JOIN t_user c " +
+                "ON a.user_id = c.id " +
+                "WHERE a.id = ? ";
+        PreparedStatement pst = connection.prepareStatement(sql);
+        pst.setLong(1,id);
+        ResultSet rs = pst.executeQuery();
+        ArticleVo articleVo = null;
+        if (rs.next()){
+            articleVo = new ArticleVo();
+            articleVo.setId(rs.getLong("id"));
+            articleVo.setUser_id(rs.getLong("user_id"));
+            articleVo.setTopic_id(rs.getLong("topic_id"));
+            articleVo.setTitle(rs.getString("title"));
+            articleVo.setArticle_pic(rs.getString("article_pic"));
+            articleVo.setSummary(rs.getString("summary"));
+            articleVo.setPraise(rs.getInt("praise"));
+            articleVo.setComment(rs.getInt("comment"));
+            articleVo.setCreate_time(rs.getTimestamp("creat_time").toLocalDateTime());
+            articleVo.setNickname(rs.getString("nickname"));
+            articleVo.setAvatar(rs.getString("avatar"));
+            articleVo.setTopic_name(rs.getString("topic_name"));
+            articleVo.setLogo(rs.getString("logo"));
+        }
+        DbUtil.close(rs,pst, connection);
+        return articleVo;
+    }
+
+
 }

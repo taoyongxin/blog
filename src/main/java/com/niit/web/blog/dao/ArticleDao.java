@@ -2,7 +2,6 @@ package com.niit.web.blog.dao;
 
 import com.niit.web.blog.domain.vo.ArticleVo;
 import com.niit.web.blog.entity.Article;
-import com.niit.web.blog.entity.Student;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -29,5 +28,20 @@ public interface ArticleDao {
      * @throws SQLException
      */
     List<Article> selectAll() throws SQLException;
+
+    /**
+     * 双表联查 文章表用户id 获取 用户表用户昵称
+     * @return
+     * @throws SQLException
+     */
     List<ArticleVo> selectAuthorNickName() throws SQLException;
+
+    /**
+     * 根据id获取文章详情
+     * @param id
+     * @return
+     * @throws SQLException
+     */
+    ArticleVo getArticle(long id) throws SQLException;
+
 }

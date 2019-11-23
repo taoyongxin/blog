@@ -5,6 +5,8 @@ import com.niit.web.blog.domain.vo.ArticleVo;
 import com.niit.web.blog.entity.Article;
 import com.niit.web.blog.factory.DaoFactory;
 import com.niit.web.blog.service.ArticleService;
+import com.niit.web.blog.util.Result;
+import com.niit.web.blog.util.ResultCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,5 +44,20 @@ public class ArticleServiceImpl implements ArticleService {
             logger.error("利用文章id查询用户昵称失败");
         }
         return articleVoList;
+    }
+
+    @Override
+    public Result getArticle(long id) {
+        ArticleVo articleVo = null;
+        try {
+            articleVo = articleDao.getArticle(id);
+        } catch (SQLException e) {
+            logger.error("根据id查询文章出现异常");
+        }
+        if(articleVo != null){
+            return Result.success(articleVo);
+        }else {
+            return Result.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
     }
 }
