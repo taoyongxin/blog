@@ -25,7 +25,7 @@ import java.util.List;
  * @Date 2019/11/14
  * @Version 1.0
  **/
-@WebServlet(urlPatterns = {"/article","/article/nickname","/article/*"})
+@WebServlet(urlPatterns = {"/article","/article/*"})
 public class ArticleController extends HttpServlet {
    private ArticleService articleService = ServiceFactory.getArticleServiceInstance();
    private static Logger logger = LoggerFactory.getLogger(ArticleController.class);
@@ -35,7 +35,8 @@ public class ArticleController extends HttpServlet {
        System.out.println(reqPath);
        if (reqPath.equals("/article")){
            getArticle(req,resp);
-       }else if (reqPath.equals("/article/nickname")){
+           System.out.println("进入到A1处");
+       }else {
            getAuthorNickName(req,resp);
        }
 
@@ -52,6 +53,7 @@ public class ArticleController extends HttpServlet {
         ResponseObject ro =new ResponseObject();
         Gson gson = new GsonBuilder().create();
         ro.setCode(resp.getStatus());
+        System.out.println("进入此处b1");
         if (resp.getStatus() == 200){
             ro.setMsg("响应成功");
         }else{
