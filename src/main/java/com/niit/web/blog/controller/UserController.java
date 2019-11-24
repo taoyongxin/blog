@@ -29,10 +29,11 @@ import java.util.Map;
  * @Date 2019/11/9
  * @Version 1.0
  **/
-@WebServlet(urlPatterns = {"/sign-in","/user"})
+@WebServlet(urlPatterns = {"/sign-in","/user","/user/hot"})
 public class UserController extends HttpServlet {
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
     private UserService userService = ServiceFactory.getUserServiceInstance();
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -61,10 +62,33 @@ public class UserController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserService userService= ServiceFactory.getUserServiceInstance();
+        String reqPath = req.getRequestURI().trim();
+        System.out.println(reqPath);
+        if (reqPath.equals("/user")){
+            getUser(req,resp);
+        }else if(reqPath.equals("/user/hot")){
+            getHotUsers(req,resp);
+        }
+    }
+    protected void getUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> userList=userService.listUser();
         Gson gson = new GsonBuilder().create();
         ResponseObject ro =new ResponseObject();
+        ro.setCode(resp.getStatus());
+        if(resp.getStatus()==200){
+            ro.setMsg("请求成功");
+        }else {
+            ro.setMsg("请求失败");
+        }
+        ro.setData(userList);
+        PrintWriter out=resp.getWriter();
+        out.print(gson.toJson(ro));
+        out.close();
+    }
+    protected void getHotUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<User> userList=userService.listHotUsers();
+        ResponseObject ro =new ResponseObject();
+        Gson gson = new GsonBuilder().create();
         ro.setCode(resp.getStatus());
         if(resp.getStatus()==200){
             ro.setMsg("请求成功");

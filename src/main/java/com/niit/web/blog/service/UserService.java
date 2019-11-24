@@ -21,6 +21,15 @@ public interface UserService {
      */
     Map<String,Object> signIn(UserDto userDto);
 
+    /**
+     * 查询所有用户
+     * @return
+     */
     List<User> listUser();
 
+    /**
+     * 查询前十高粉丝量用户
+     * @return
+     */
+    List<User> listHotUsers();
 }

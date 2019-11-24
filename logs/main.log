@@ -1,1 +1,5 @@
-2019-11-23.21:28:26 ERROR [main] com.niit.web.blog.dao.impl.ArticleDaoImpl.convert:152  文章数据结果集解析异常
+2019-11-24.14:33:58 INFO  [main] com.niit.web.blog.dao.UserDaoTest.batchInsert:23  批量新增用户成功
+2019-11-24.14:38:44 INFO  [main] com.niit.web.blog.dao.UserDaoTest.batchInsert:23  批量新增用户成功
+2019-11-24.14:40:11 INFO  [main] com.niit.web.blog.dao.UserDaoTest.batchInsert:23  批量新增用户成功
+2019-11-24.14:43:30 INFO  [main] com.niit.web.blog.dao.UserDaoTest.batchInsert:23  批量新增用户成功
+2019-11-24.14:51:41 INFO  [main] com.niit.web.blog.dao.UserDaoTest.batchInsert:23  批量新增用户成功

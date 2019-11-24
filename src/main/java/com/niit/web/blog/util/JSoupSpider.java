@@ -152,6 +152,9 @@ public class JSoupSpider {
                 user.setIntroduction(linkChildren.get(2).text());
                 user.setBirthday(DataUtil.getBirthday());
                 user.setCreateTime(LocalDateTime.now());
+                user.setFans(DataUtil.getFans());
+                user.setFollows(DataUtil.getFollows());
+                user.setArticles(DataUtil.getFollows());
                 userList.add(user);
             });
         }

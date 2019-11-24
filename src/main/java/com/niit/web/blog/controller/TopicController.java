@@ -39,19 +39,6 @@ public class TopicController extends HttpServlet {
         else if (reqPath.equals("/api/topic/all")){
             getAllTopic(req,resp);
         }
-//        List<Topic> topics = topicService.listtopic();
-//        Gson gson = new GsonBuilder().create();
-//        ResponseObject ro = new ResponseObject();
-//        ro.setCode(resp.getStatus());
-//        if (resp.getStatus()==200){
-//            ro.setMsg("请求成功");
-//        }else {
-//            ro.setMsg("请求失败");
-//        }
-//        ro.setData(topics);
-//        PrintWriter out = resp.getWriter();
-//        out.print(gson.toJson(ro));
-//        out.close();
     }
     private void getHotTopic(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         List<Topic> topics = topicService.listtopic();

@@ -18,6 +18,10 @@ public interface TopicService {
      */
     List<Topic> listtopic();
 
+    /**
+     * 查询所有专题
+     * @return
+     */
     List<Topic> ListAllTopic();
 
     /**

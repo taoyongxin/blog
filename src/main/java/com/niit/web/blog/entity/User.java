@@ -24,9 +24,9 @@ public class User {
     private String address;
     private String introduction;
     private String homepage;
-    private Short follows;
-    private Short fans;
-    private Short articles;
+    private int follows;
+    private int fans;
+    private int articles;
     private LocalDateTime createTime;
     private Short status;
 }

@@ -31,4 +31,11 @@ public interface UserDao {
      * @throws SQLException
      */
     List<User> selectAll() throws SQLException;
+
+    /**
+     * 查询粉丝数量前十的用户
+     * @return
+     * @throws SQLException
+     */
+    List<User> selectHotUsers() throws SQLException;
 }

@@ -33,4 +33,10 @@ public class UserDaoTest {
         List<User> users = userDao.selectAll();
         users.forEach(user -> System.out.println(user));
     }
+
+    @Test
+    public void selectHotUsers() throws SQLException {
+        List<User> userList = userDao.selectHotUsers();
+        userList.forEach(user -> System.out.println(user));
+    }
 }

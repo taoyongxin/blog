@@ -3,7 +3,8 @@ package com.niit.web.blog.dao.impl;
 import com.niit.web.blog.dao.UserDao;
 import com.niit.web.blog.entity.User;
 import com.niit.web.blog.util.DbUtil;
-import org.apache.commons.dbutils.QueryRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,13 +21,12 @@ import java.util.List;
  * @Version 1.0
  **/
 public class UserDaoImpl implements UserDao {
-
-
+    private static Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
     @Override
     public int[] batchInsert(List<User> userList) throws SQLException {
         Connection connection = DbUtil.getConnection();
         connection.setAutoCommit(false);
-        String sql = "INSERT INTO t_user (mobile,password,nickname,avatar,gender,birthday,introduction,create_time) VALUES (?,?,?,?,?,?,?,?) ";
+        String sql = "INSERT INTO t_user (mobile,password,nickname,avatar,gender,birthday,introduction,create_time,fans,follows,articles) VALUES (?,?,?,?,?,?,?,?,?,?,?) ";
 
         PreparedStatement pstmt = connection.prepareStatement(sql);
         userList.forEach(user -> {
@@ -40,6 +40,9 @@ public class UserDaoImpl implements UserDao {
                 pstmt.setObject(6, user.getBirthday());
                 pstmt.setString(7, user.getIntroduction());
                 pstmt.setObject(8, user.getCreateTime());
+                pstmt.setInt(9,user.getFans());
+                pstmt.setInt(10,user.getFollows());
+                pstmt.setInt(11,user.getArticles());
                 pstmt.addBatch();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -102,6 +105,29 @@ public class UserDaoImpl implements UserDao {
             user.setIntroduction(rs.getString("introduction"));
             userList.add(user);
         }
+        return userList;
+    }
+
+    @Override
+    public List<User> selectHotUsers() throws SQLException {
+        Connection connection = DbUtil.getConnection();
+        String sql = "SELECT * FROM t_user ORDER BY fans DESC LIMIT 10";
+        PreparedStatement pst =  connection.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        List<User> userList = new ArrayList<>(100);
+        try {
+            while (rs.next()){
+                User user= new User();
+                user.setNickname(rs.getString("nickname"));
+                user.setAvatar(rs.getString("avatar"));
+                user.setIntroduction(rs.getString("introduction"));
+                user.setFans(rs.getInt("fans"));
+                userList.add(user);
+            }
+        }catch (SQLException e){
+            logger.error("查询热门用户数据产生异常");
+        }
+        DbUtil.close(rs,pst,connection);
         return userList;
     }
 }

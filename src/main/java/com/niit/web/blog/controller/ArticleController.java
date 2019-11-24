@@ -6,6 +6,7 @@ import com.niit.web.blog.entity.Article;
 import com.niit.web.blog.factory.ServiceFactory;
 import com.niit.web.blog.service.ArticleService;
 import com.niit.web.blog.util.ResponseObject;
+import com.niit.web.blog.util.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +26,7 @@ import java.util.List;
  * @Date 2019/11/14
  * @Version 1.0
  **/
-@WebServlet(urlPatterns = {"/article","/article/*"})
+@WebServlet(urlPatterns = {"/article","/article/nickname","/article/*"})
 public class ArticleController extends HttpServlet {
    private ArticleService articleService = ServiceFactory.getArticleServiceInstance();
    private static Logger logger = LoggerFactory.getLogger(ArticleController.class);
@@ -36,10 +37,12 @@ public class ArticleController extends HttpServlet {
        if (reqPath.equals("/article")){
            getArticle(req,resp);
            System.out.println("进入到A1处");
-       }else {
+       }else if(reqPath.equals("/article/nickname")){
            getAuthorNickName(req,resp);
+       }else{
+           System.out.println(11);
+           getArticleById(req,resp);
        }
-
     }
     private void getAuthorNickName(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException{
         Gson gson = new GsonBuilder().create();
@@ -69,6 +72,16 @@ public class ArticleController extends HttpServlet {
     }
     private void getArticleByCreateTime(HttpServletRequest req , HttpServletResponse resp) {
 
+    }
+    private void getArticleById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String info = req.getPathInfo().trim();
+        //取得路径参数
+        String id = info.substring(info.indexOf("/") + 1);
+        Result result = articleService.getArticle(Long.parseLong(id));
+        Gson gson = new GsonBuilder().create();
+        PrintWriter out = resp.getWriter();
+        out.print(gson.toJson(result));
+        out.close();
     }
 
 

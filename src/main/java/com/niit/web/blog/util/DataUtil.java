@@ -119,6 +119,21 @@ public class DataUtil {
         return bound;
     }
 
+    /**
+     * 随机生成粉丝数量
+     * @return
+     */
+    public static int getFans(){
+        Random random = new Random();
+        int bound = random.nextInt(200000)+1;
+        return bound;
+    }
+    public static int getFollows(){
+        Random random = new Random();
+        int bound = random.nextInt(500)+1;
+        return bound;
+    }
+
 
 
 

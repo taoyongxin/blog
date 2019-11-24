@@ -57,5 +57,16 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
+    @Override
+    public List<User> listHotUsers() {
+        List<User> users = null;
+        try {
+            users = userDao.selectHotUsers();
+        } catch (SQLException e) {
+            System.err.println("查询热门用户操作失败");
+        }
+        return users;
+    }
+
 
 }
