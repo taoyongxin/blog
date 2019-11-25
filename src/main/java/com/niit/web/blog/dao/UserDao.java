@@ -38,4 +38,12 @@ public interface UserDao {
      * @throws SQLException
      */
     List<User> selectHotUsers() throws SQLException;
+
+    /**
+     * 根据id获取用户详情
+     * @param id
+     * @return
+     * @throws SQLException
+     */
+    User getUser(long id) throws SQLException;
 }

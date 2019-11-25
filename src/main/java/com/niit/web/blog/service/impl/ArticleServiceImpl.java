@@ -60,4 +60,19 @@ public class ArticleServiceImpl implements ArticleService {
             return Result.failure(ResultCode.RESULT_CODE_DATA_NONE);
         }
     }
+
+    @Override
+    public Result selectByTopicId(Long topicId) {
+        List<ArticleVo> articleVo = null;
+        try {
+            articleVo =  articleDao.selectByTopicId(topicId);
+        } catch (SQLException e) {
+            logger.error("根据专题id查询文章失败");
+        }
+        if (articleVo !=null){
+            return Result.success(articleVo);
+        }else {
+            return Result.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
+    }
 }

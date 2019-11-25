@@ -22,4 +22,10 @@ public class ArticleServiceTest {
         Result result = articleService.getArticle(5);
         System.out.println(result.getData());
     }
+
+    @Test
+    public void selectByTopicId() {
+        Result result = articleService.selectByTopicId((long) 53);
+        System.out.println(result.getData());
+    }
 }

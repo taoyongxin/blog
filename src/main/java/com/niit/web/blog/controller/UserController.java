@@ -8,6 +8,7 @@ import com.niit.web.blog.factory.ServiceFactory;
 import com.niit.web.blog.service.UserService;
 import com.niit.web.blog.util.Message;
 import com.niit.web.blog.util.ResponseObject;
+import com.niit.web.blog.util.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,7 @@ import java.util.Map;
  * @Date 2019/11/9
  * @Version 1.0
  **/
-@WebServlet(urlPatterns = {"/sign-in","/user","/user/hot"})
+@WebServlet(urlPatterns = {"/sign-in","/user","/user/hot","/user/*"})
 public class UserController extends HttpServlet {
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
     private UserService userService = ServiceFactory.getUserServiceInstance();
@@ -68,6 +69,8 @@ public class UserController extends HttpServlet {
             getUser(req,resp);
         }else if(reqPath.equals("/user/hot")){
             getHotUsers(req,resp);
+        }else{
+            getUserById(req,resp);
         }
     }
     protected void getUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -98,6 +101,15 @@ public class UserController extends HttpServlet {
         ro.setData(userList);
         PrintWriter out=resp.getWriter();
         out.print(gson.toJson(ro));
+        out.close();
+    }
+    private void getUserById(HttpServletRequest req,HttpServletResponse resp) throws ServletException,IOException{
+        String info = req.getPathInfo().trim();
+        String id = info.substring(info.indexOf("/")+1);
+        Result result = userService.getUser(Long.parseLong(id));
+        Gson gson = new GsonBuilder().create();
+        PrintWriter out = resp.getWriter();
+        out.print(gson.toJson(result));
         out.close();
     }
     @Override

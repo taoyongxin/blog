@@ -3,6 +3,7 @@ package com.niit.web.blog.service;
 import com.niit.web.blog.domain.dto.UserDto;
 import com.niit.web.blog.entity.User;
 import com.niit.web.blog.factory.ServiceFactory;
+import com.niit.web.blog.util.Result;
 import org.junit.Test;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class UserServiceTest {
 
     @Test
     public void signIn() {
-        UserDto userDto = new UserDto("13909840579","0644be9a0826f445ad1f95a0346b52bb");
+        UserDto userDto = new UserDto("13908706554","7081a432bf709392e990207ecfc4b410");
         Map<String,Object> map = userService.signIn(userDto);
         System.out.println(map);
     }
@@ -30,5 +31,11 @@ public class UserServiceTest {
         List<User> users = userService.listUser();
         users.forEach(user -> System.out.println(user));
         System.out.println(users.size());
+    }
+
+    @Test
+    public void getUser() {
+        Result result  = userService.getUser(1);
+        System.out.println(result.getData());
     }
 }

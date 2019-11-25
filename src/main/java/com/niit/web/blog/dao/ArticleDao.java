@@ -44,4 +44,12 @@ public interface ArticleDao {
      */
     ArticleVo getArticle(long id) throws SQLException;
 
+    /**
+     * 专题ID归类文章
+     * @param topicId
+     * @return
+     * @throws SQLException
+     */
+    List<ArticleVo> selectByTopicId(long topicId) throws SQLException;
+
 }

@@ -1,5 +1,4 @@
-2019-11-24.14:33:58 INFO  [main] com.niit.web.blog.dao.UserDaoTest.batchInsert:23  批量新增用户成功
-2019-11-24.14:38:44 INFO  [main] com.niit.web.blog.dao.UserDaoTest.batchInsert:23  批量新增用户成功
-2019-11-24.14:40:11 INFO  [main] com.niit.web.blog.dao.UserDaoTest.batchInsert:23  批量新增用户成功
-2019-11-24.14:43:30 INFO  [main] com.niit.web.blog.dao.UserDaoTest.batchInsert:23  批量新增用户成功
-2019-11-24.14:51:41 INFO  [main] com.niit.web.blog.dao.UserDaoTest.batchInsert:23  批量新增用户成功
+2019-11-24.23:27:25 ERROR [main] com.niit.web.blog.util.BeanHandler.convertArticle:111  文章数据结果集解析异常
+2019-11-24.23:28:49 ERROR [main] com.niit.web.blog.util.BeanHandler.convertArticle:111  文章数据结果集解析异常
+2019-11-24.23:30:04 ERROR [main] com.niit.web.blog.util.BeanHandler.convertArticle:111  文章数据结果集解析异常
+2019-11-24.23:31:10 ERROR [main] com.niit.web.blog.util.BeanHandler.convertArticle:111  文章数据结果集解析异常

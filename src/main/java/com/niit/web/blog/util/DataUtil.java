@@ -133,7 +133,9 @@ public class DataUtil {
         int bound = random.nextInt(500)+1;
         return bound;
     }
-
+    public static void main(String[] args) {
+        System.out.println(DigestUtils.md5Hex("111"));
+    }
 
 
 

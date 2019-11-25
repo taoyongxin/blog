@@ -28,4 +28,12 @@ public interface ArticleService {
      * @return
      */
     Result getArticle(long id);
+
+    /**
+     * 根据专题id查询所属专题的文章
+     * @param topicId
+     * @return
+     */
+    Result selectByTopicId(Long topicId);
+
 }

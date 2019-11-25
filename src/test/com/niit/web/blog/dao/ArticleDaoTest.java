@@ -36,4 +36,10 @@ public class ArticleDaoTest {
         ArticleVo article = articleDao.getArticle(5);
         System.out.println(article);
     }
+
+    @Test
+    public void selectByTopicId() throws SQLException {
+        List<ArticleVo> articleVoList = articleDao.selectByTopicId(53);
+        articleVoList.forEach(a -> System.out.println(a));
+    }
 }

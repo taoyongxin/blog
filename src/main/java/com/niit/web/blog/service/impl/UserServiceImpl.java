@@ -5,6 +5,8 @@ import com.niit.web.blog.domain.dto.UserDto;
 import com.niit.web.blog.entity.User;
 import com.niit.web.blog.factory.DaoFactory;
 import com.niit.web.blog.service.UserService;
+import com.niit.web.blog.util.Result;
+import com.niit.web.blog.util.ResultCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,6 +68,21 @@ public class UserServiceImpl implements UserService {
             System.err.println("查询热门用户操作失败");
         }
         return users;
+    }
+
+    @Override
+    public Result getUser(long id) {
+        User user = null;
+        try {
+            user = userDao.getUser(id);
+        } catch (SQLException e) {
+            logger.error("根据id查询指定用户详情出现异常");
+        }
+        if(user != null){
+            return  Result.success(user);
+        }else {
+            return Result.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
     }
 
 

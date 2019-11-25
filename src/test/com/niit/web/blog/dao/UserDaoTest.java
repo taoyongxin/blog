@@ -29,6 +29,12 @@ public class UserDaoTest {
     }
 
     @Test
+    public void findUserByMobile() throws SQLException {
+        User userList = userDao.findUserByMobile("13908706554");
+        System.out.println(userList);
+    }
+
+    @Test
     public void selectAll() throws SQLException {
         List<User> users = userDao.selectAll();
         users.forEach(user -> System.out.println(user));
@@ -38,5 +44,11 @@ public class UserDaoTest {
     public void selectHotUsers() throws SQLException {
         List<User> userList = userDao.selectHotUsers();
         userList.forEach(user -> System.out.println(user));
+    }
+
+    @Test
+    public void getUser() throws SQLException {
+        User user = userDao.getUser(1);
+        System.out.println(user);
     }
 }

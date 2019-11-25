@@ -47,7 +47,7 @@ public class TopicDaoImpl implements TopicDao {
         });
         int[] result = pstmt.executeBatch();
         connection.commit();
-        DbUtil.close(null,pstmt,connection);
+        DbUtil.close(connection,pstmt,null);
         return result;
     }
 
@@ -74,7 +74,7 @@ public class TopicDaoImpl implements TopicDao {
         }catch (SQLException e){
             logger.error("查询专题数据产生异常");
         }
-        DbUtil.close(rs,pstmt,connection);
+        DbUtil.close(connection,pstmt, rs);
         return topicList;
     }
 
@@ -101,7 +101,7 @@ public class TopicDaoImpl implements TopicDao {
             topicVo.setFollows(rs.getInt("follows"));
             topicVo.setCreate_time(rs.getTimestamp("create_time").toLocalDateTime());
         }
-        DbUtil.close(rs,pstmt, connection);
+        DbUtil.close(connection,pstmt, rs);
         return topicVo;
     }
 

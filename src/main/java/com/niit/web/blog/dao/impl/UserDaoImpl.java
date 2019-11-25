@@ -65,7 +65,7 @@ public class UserDaoImpl implements UserDao {
         ResultSet rs = pstmt.executeQuery();
         User user = null;
         if (rs.next()){
-            user = new User();
+           /* user = new User();*/
             user = new User();
             user.setId(rs.getLong("id"));
             user.setMobile(rs.getString("mobile"));
@@ -76,9 +76,9 @@ public class UserDaoImpl implements UserDao {
             user.setBirthday(rs.getDate("birthday").toLocalDate());
             user.setIntroduction(rs.getString("introduction"));
             user.setAddress(rs.getString("address"));
-            user.setFollows(rs.getShort("follows"));
-            user.setFans(rs.getShort("fans"));
-            user.setArticles(rs.getShort("articles"));
+            user.setFollows(rs.getInt("follows"));
+            user.setFans(rs.getInt("fans"));
+            user.setArticles(rs.getInt("articles"));
             user.setCreateTime(rs.getTimestamp("create_time").toLocalDateTime());
             user.setStatus(rs.getShort("status"));
         }
@@ -127,7 +127,33 @@ public class UserDaoImpl implements UserDao {
         }catch (SQLException e){
             logger.error("查询热门用户数据产生异常");
         }
-        DbUtil.close(rs,pst,connection);
+        DbUtil.close(connection,pst, rs);
         return userList;
+    }
+
+    @Override
+    public User getUser(long id) throws SQLException {
+       Connection connection = DbUtil.getConnection();
+       String sql = "SELECT * FROM t_user WHERE id = ? ";
+       PreparedStatement pstmt = connection.prepareStatement(sql);
+       pstmt.setLong(1,id);
+       ResultSet rs = pstmt.executeQuery();
+       User user = null;
+       if (rs.next()){
+           user = new User();
+           user.setId(rs.getLong("id"));
+           user.setMobile(rs.getString("mobile"));
+           user.setNickname(rs.getString("nickname"));
+           user.setAvatar(rs.getString("avatar"));
+           user.setGender(rs.getString("gender"));
+           user.setBirthday(rs.getDate("birthday").toLocalDate());
+           user.setIntroduction(rs.getString("introduction"));
+           user.setAddress(rs.getString("address"));
+           user.setFollows(rs.getInt("follows"));
+           user.setFans(rs.getInt("fans"));
+           user.setArticles(rs.getInt("articles"));
+           user.setCreateTime(rs.getTimestamp("create_time").toLocalDateTime());
+       }
+       return user;
     }
 }

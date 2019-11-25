@@ -27,4 +27,9 @@ public class ArticleVo {
     private String topic_name;
     private String logo;
     private LocalDateTime create_time;
+    private long admin_id;
+
+   /* private Article article;
+    private User author;
+    private Topic topic;*/
 }
