@@ -55,6 +55,17 @@ public class UserDaoImpl implements UserDao {
         connection.close();
         return result;
     }
+    @Override
+    public int insert(User user) throws SQLException {
+        Connection connection = DbUtil.getConnection();
+        String sql = "INSERT INTO t_user (mobile,password) VALUES(?,?)";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1,user.getMobile());
+        pstmt.setString(2,user.getPassword());
+        int n = pstmt.executeUpdate();
+        DbUtil.close(connection,pstmt);
+        return n;
+    }
 
     @Override
     public User findUserByMobile(String mobile) throws SQLException {
@@ -156,4 +167,6 @@ public class UserDaoImpl implements UserDao {
        }
        return user;
     }
+
+
 }

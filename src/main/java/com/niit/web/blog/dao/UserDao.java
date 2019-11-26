@@ -46,4 +46,12 @@ public interface UserDao {
      * @throws SQLException
      */
     User getUser(long id) throws SQLException;
+
+    /**
+     * 新增用户
+     * @param user
+     * @throws SQLException
+     * @return
+     */
+    int insert(User user) throws SQLException;
 }

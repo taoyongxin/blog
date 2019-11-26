@@ -51,4 +51,12 @@ public class UserDaoTest {
         User user = userDao.getUser(1);
         System.out.println(user);
     }
+
+    @Test
+    public void insertUser() throws SQLException{
+        User user = new User();
+        user.setMobile("179");
+        user.setPassword("709392e990207ecfc4b410");
+        int n = userDao.insert(user);
+    }
 }

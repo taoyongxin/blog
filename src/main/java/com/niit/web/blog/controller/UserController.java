@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.niit.web.blog.domain.dto.UserDto;
 import com.niit.web.blog.entity.User;
+import com.niit.web.blog.factory.DaoFactory;
 import com.niit.web.blog.factory.ServiceFactory;
 import com.niit.web.blog.service.UserService;
 import com.niit.web.blog.util.Message;
@@ -20,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +41,15 @@ public class UserController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String reqPath = req.getRequestURI().trim();
+        if ("/sign-in".equals(reqPath)){
+            signIn(req,resp);
+        }else if ("/sign-up".equals(reqPath)){
+            System.out.println("进入此处");
+            signUp(req,resp);
+        }
+    }
+    private void signIn(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         BufferedReader reader = req.getReader();
         StringBuilder stringBuilder = new StringBuilder();
         String line = null;
@@ -55,6 +67,35 @@ public class UserController extends HttpServlet {
         }else{
             ro = ResponseObject.success(200, msg);
         }
+        PrintWriter out = resp.getWriter();
+        out.print(gson.toJson(ro));
+        out.close();
+    }
+
+    protected void signUp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        BufferedReader reader = req.getReader();
+        StringBuilder stringBuilder = new StringBuilder();
+        String line = null;
+        while ((line = reader.readLine()) != null){
+            stringBuilder.append(line);
+        }
+        logger.info("注册用户信息："+stringBuilder.toString());
+        Gson gson = new GsonBuilder().create();
+        User user = gson.fromJson(stringBuilder.toString(),User.class);
+        /*添加用户表的创建时间的字段*/
+        user.setCreateTime(LocalDateTime.now());
+        /*补全数据库用户表的id字段信息*/
+        long id = 0;
+        try {
+            id = DaoFactory.getUserDaoInstance().insert(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        user.setId((long) id);
+        resp.setContentType("application/json;charset=utf-8");
+        int code = resp.getStatus();
+        String msg = code == 200 ? "成功":"失败";
+        ResponseObject ro = ResponseObject.success(code,msg,user);
         PrintWriter out = resp.getWriter();
         out.print(gson.toJson(ro));
         out.close();
