@@ -23,6 +23,12 @@ public interface UserService {
     Map<String,Object> signIn(UserDto userDto);
 
     /**
+     * 用户注册
+     * @param userDto
+     * @return
+     */
+    Map<String,Object> signUp(UserDto userDto);
+    /**
      * 查询所有用户
      * @return
      */

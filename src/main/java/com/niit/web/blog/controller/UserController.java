@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.niit.web.blog.domain.dto.UserDto;
 import com.niit.web.blog.entity.User;
-import com.niit.web.blog.factory.DaoFactory;
 import com.niit.web.blog.factory.ServiceFactory;
 import com.niit.web.blog.service.UserService;
 import com.niit.web.blog.util.Message;
@@ -21,8 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +30,7 @@ import java.util.Map;
  * @Date 2019/11/9
  * @Version 1.0
  **/
-@WebServlet(urlPatterns = {"/sign-in","/user","/user/hot","/user/*"})
+@WebServlet(urlPatterns = {"/sign-in","/sign-up","/user","/user/hot","/user/*"})
 public class UserController extends HttpServlet {
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
     private UserService userService = ServiceFactory.getUserServiceInstance();
@@ -76,27 +73,27 @@ public class UserController extends HttpServlet {
         BufferedReader reader = req.getReader();
         StringBuilder stringBuilder = new StringBuilder();
         String line = null;
-        while ((line = reader.readLine()) != null){
+        while ((line = reader.readLine()) != null) {
             stringBuilder.append(line);
         }
-        logger.info("注册用户信息："+stringBuilder.toString());
+        System.out.println(stringBuilder.toString());
         Gson gson = new GsonBuilder().create();
-        User user = gson.fromJson(stringBuilder.toString(),User.class);
-        /*添加用户表的创建时间的字段*/
-        user.setCreateTime(LocalDateTime.now());
-        /*补全数据库用户表的id字段信息*/
-        long id = 0;
-        try {
-            id = DaoFactory.getUserDaoInstance().insert(user);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        user.setId((long) id);
-        resp.setContentType("application/json;charset=utf-8");
-        int code = resp.getStatus();
-        String msg = code == 200 ? "成功":"失败";
-        ResponseObject ro = ResponseObject.success(code,msg,user);
+        Map<String, Object> map = null;
+        // 获取请求路径
+        UserDto userDto = gson.fromJson(stringBuilder.toString(), UserDto.class);
+        String requestPath = req.getRequestURI().trim();
         PrintWriter out = resp.getWriter();
+        map = userService.signUp(userDto);
+        String msg = (String) map.get("msg");
+        ResponseObject ro;
+        switch (msg) {
+            case Message.REGISTER_SUCCESS:
+                ro = ResponseObject.success(200, msg, map.get("data"));
+                break;
+            case Message.REGISTER_DEFEATED:
+            default:
+                ro = ResponseObject.success(200, msg);
+        }
         out.print(gson.toJson(ro));
         out.close();
     }

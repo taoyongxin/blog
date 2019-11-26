@@ -5,6 +5,7 @@ import com.niit.web.blog.domain.dto.UserDto;
 import com.niit.web.blog.entity.User;
 import com.niit.web.blog.factory.DaoFactory;
 import com.niit.web.blog.service.UserService;
+import com.niit.web.blog.util.Message;
 import com.niit.web.blog.util.Result;
 import com.niit.web.blog.util.ResultCode;
 import org.slf4j.Logger;
@@ -46,6 +47,25 @@ public class UserServiceImpl implements UserService {
         }
         return map;
 
+    }
+
+    @Override
+    public Map<String, Object> signUp(UserDto userDto) {
+        Map<String,Object> map = new HashMap<>();
+        int i = 0;
+        try {
+            i = userDao.insert(userDto);
+        } catch (SQLException e) {
+            logger.error("注册失败");
+        }
+        if(i == 1){
+            map.put("msg", Message.REGISTER_SUCCESS);
+            map.put("data",userDto);
+            logger.info("注册"+userDto.getMobile()+"注册成功");
+        }else {
+            map.put("msg",Message.REGISTER_DEFEATED);
+        }
+        return map;
     }
 
     @Override

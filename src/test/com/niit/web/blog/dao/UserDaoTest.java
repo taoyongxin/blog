@@ -1,5 +1,6 @@
 package com.niit.web.blog.dao;
 
+import com.niit.web.blog.domain.dto.UserDto;
 import com.niit.web.blog.entity.User;
 import com.niit.web.blog.factory.DaoFactory;
 import com.niit.web.blog.util.JSoupSpider;
@@ -52,11 +53,21 @@ public class UserDaoTest {
         System.out.println(user);
     }
 
+    /**
+     * 测试用户新增
+     * @throws SQLException
+     */
     @Test
     public void insertUser() throws SQLException{
-        User user = new User();
-        user.setMobile("179");
-        user.setPassword("709392e990207ecfc4b410");
-        int n = userDao.insert(user);
+        UserDto userDto = new UserDto();
+        userDto.setMobile("1427177855");
+        userDto.setPassword("111");
+        userDto.setNickname("tao");
+        int result = userDao.insert(userDto);
+        if (result == 1){
+            logger.info("成功新增");
+        }else{
+            logger.info("新增失败");
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.niit.web.blog.dao;
 
+import com.niit.web.blog.domain.dto.UserDto;
 import com.niit.web.blog.entity.User;
 
 import java.sql.SQLException;
@@ -49,9 +50,9 @@ public interface UserDao {
 
     /**
      * 新增用户
-     * @param user
+     * @param userDto
      * @throws SQLException
      * @return
      */
-    int insert(User user) throws SQLException;
+    int insert(UserDto userDto) throws SQLException;
 }

@@ -1,15 +1,14 @@
 package com.niit.web.blog.dao.impl;
 
 import com.niit.web.blog.dao.UserDao;
+import com.niit.web.blog.domain.dto.UserDto;
 import com.niit.web.blog.entity.User;
 import com.niit.web.blog.util.DbUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,15 +54,24 @@ public class UserDaoImpl implements UserDao {
         connection.close();
         return result;
     }
+
+    /**
+     * 新增
+     * @param userDto
+     * @return
+     * @throws SQLException
+     */
     @Override
-    public int insert(User user) throws SQLException {
+    public int insert(UserDto userDto) throws SQLException {
         Connection connection = DbUtil.getConnection();
-        String sql = "INSERT INTO t_user (mobile,password) VALUES(?,?)";
+        String sql = "INSERT INTO t_user (mobile,password,nickname,create_time) VALUES(?,?,?,?)";
         PreparedStatement pstmt = connection.prepareStatement(sql);
-        pstmt.setString(1,user.getMobile());
-        pstmt.setString(2,user.getPassword());
+        pstmt.setString(1,userDto.getMobile());
+        pstmt.setString(2,userDto.getPassword());
+        pstmt.setString(3,userDto.getNickname());
+        pstmt.setObject(4, Timestamp.valueOf(LocalDateTime.now()));
         int n = pstmt.executeUpdate();
-        DbUtil.close(connection,pstmt);
+        System.out.println("受影响条数："+n);
         return n;
     }
 
