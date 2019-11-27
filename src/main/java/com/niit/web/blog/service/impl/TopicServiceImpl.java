@@ -1,6 +1,9 @@
 package com.niit.web.blog.service.impl;
 
+import com.niit.web.blog.dao.ArticleDao;
 import com.niit.web.blog.dao.TopicDao;
+import com.niit.web.blog.domain.vo.ArticleVo;
+import com.niit.web.blog.domain.vo.TopicVo;
 import com.niit.web.blog.entity.Topic;
 import com.niit.web.blog.factory.DaoFactory;
 import com.niit.web.blog.service.TopicService;
@@ -22,7 +25,7 @@ import java.util.List;
 public class TopicServiceImpl implements TopicService {
     private TopicDao topicDao = DaoFactory.getTopicDaoInstance();
     private static Logger logger = LoggerFactory.getLogger(ArticleServiceImpl.class);
-
+    private ArticleDao articleDao = DaoFactory.getArticleDaoInstance();
     /**
      * 未封装的获取所有文章
      * @return
@@ -55,6 +58,27 @@ public class TopicServiceImpl implements TopicService {
         }else {
             return Result.failure(ResultCode.RESULT_CODE_DATA_NONE);
         }
+    }
+
+    @Override
+    public Result getTopic(long id) {
+        TopicVo topicVo = null;
+        try {
+            topicVo = topicDao.getTopic(id);
+        } catch (SQLException e) {
+            logger.error("根据id获取专题详情出现异常");
+        }
+        if(topicVo != null){
+            try {
+                List<ArticleVo> articleVoList = articleDao.selectByTopicId(topicVo.getTopic().getId());
+            } catch (SQLException e) {
+                logger.error("根据专题id获取所有文章出现异常");
+            }
+            return Result.success(topicVo);
+        }else {
+            return Result.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
+
     }
 
    /* @Override

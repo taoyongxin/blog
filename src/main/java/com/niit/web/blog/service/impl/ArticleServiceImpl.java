@@ -75,4 +75,34 @@ public class ArticleServiceImpl implements ArticleService {
             return Result.failure(ResultCode.RESULT_CODE_DATA_NONE);
         }
     }
+
+    @Override
+    public Result getHotArticles() {
+        List<ArticleVo> articleList = null;
+        try {
+            articleList = articleDao.selectHotArticles();
+        } catch (SQLException e) {
+             logger.error("获取热门专题出现异常");
+        }
+        if(articleList != null){
+            return Result.success(articleList);
+        }else{
+            return Result.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
+    }
+
+    @Override
+    public Result selectByUserId(Long userId) {
+        List<ArticleVo> articleVo = null;
+        try {
+            articleVo = articleDao.selectByUserId(userId);
+        } catch (SQLException e) {
+            logger.error("根据用户id查询文章失败");
+        }
+        if(articleVo != null){
+            return Result.success(articleVo);
+        }else {
+            return Result.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
+    }
 }

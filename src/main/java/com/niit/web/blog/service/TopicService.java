@@ -36,6 +36,6 @@ public interface TopicService {
      * @param id
      * @return
      */
-//    Result getTopic(long id);
+    Result getTopic(long id);
 
 }

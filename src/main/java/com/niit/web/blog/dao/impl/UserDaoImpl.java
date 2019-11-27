@@ -78,14 +78,14 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findUserByMobile(String mobile) throws SQLException {
-        Connection connection = DbUtil.getConnection();
+        /*Connection connection = DbUtil.getConnection();
         String sql = "SELECT * FROM t_user WHERE mobile = ? ";
         PreparedStatement pstmt = connection.prepareStatement(sql);
         pstmt.setString(1,mobile);
         ResultSet rs = pstmt.executeQuery();
         User user = null;
         if (rs.next()){
-           /* user = new User();*/
+           *//* user = new User();*//*
             user = new User();
             user.setId(rs.getLong("id"));
             user.setMobile(rs.getString("mobile"));
@@ -102,6 +102,17 @@ public class UserDaoImpl implements UserDao {
             user.setCreateTime(rs.getTimestamp("create_time").toLocalDateTime());
             user.setStatus(rs.getShort("status"));
         }
+        return user;*/
+        /**
+         * 封装后
+         */
+        Connection  connection = DbUtil.getConnection();
+        String sql = "SELECT * FROM t_user WHERE mobile = ? ";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1,mobile);
+        ResultSet rs = pstmt.executeQuery();
+        User user = BeanHandler.convertUser(rs).get(0);
+        DbUtil.close(connection,pstmt,rs);
         return user;
     }
 

@@ -23,7 +23,7 @@ import java.io.PrintWriter;
  * @Date 2019/11/20
  * @Version 1.0
  **/
-@WebServlet(urlPatterns = {"/api/topic","/api/topic/all"})
+@WebServlet(urlPatterns = {"/api/topic","/api/topic/all","/api/topic/*"})
 public class TopicController extends HttpServlet {
     TopicService topicService = ServiceFactory.getTopicServiceInstance();
     private static Logger logger = LoggerFactory.getLogger(TopicController.class);
@@ -33,9 +33,10 @@ public class TopicController extends HttpServlet {
         System.out.println(reqPath);
         if (reqPath.equals("/api/topic")){
             getHotTopic(req,resp);
-        }
-        else if (reqPath.equals("/api/topic/all")){
+        } else if (reqPath.equals("/api/topic/all")){
             getAllTopic(req,resp);
+        } else {
+            getTopicById(req,resp);
         }
     }
 
@@ -99,5 +100,15 @@ public class TopicController extends HttpServlet {
       PrintWriter out = resp.getWriter();
       out.print(gson.toJson(result));
       out.close();
+    }
+    private void getTopicById(HttpServletRequest req,HttpServletResponse resp) throws ServletException,IOException{
+        String info = req.getPathInfo().trim();
+        //取路径参数
+        String id = info.substring(info.indexOf("/")+1);
+        Gson gson = new GsonBuilder().create();
+        Result result = topicService.getTopic(Long.parseLong(id));
+        PrintWriter out = resp.getWriter();
+        out.print(gson.toJson(result));
+        out.close();
     }
 }

@@ -42,4 +42,17 @@ public class ArticleDaoTest {
         List<ArticleVo> articleVoList = articleDao.selectByTopicId(53);
         articleVoList.forEach(a -> System.out.println(a));
     }
+
+    @Test
+    public void selectHotArticles() throws SQLException {
+        List<ArticleVo> articles = articleDao.selectHotArticles();
+        articles.forEach(article -> System.out.println(article));
+        System.out.println(articles.size());
+    }
+
+    @Test
+    public void selectByUserId() throws SQLException{
+        List<ArticleVo> articleVoList =  articleDao.selectByUserId(8);
+        articleVoList.forEach(a-> System.out.println(a));
+    }
 }

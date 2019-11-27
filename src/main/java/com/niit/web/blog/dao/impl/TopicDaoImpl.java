@@ -112,9 +112,10 @@ public class TopicDaoImpl implements TopicDao {
         DbUtil.close(connection,pstmt, rs);
         return topicVo;*/
        Connection connection = DbUtil.getConnection();
+       //查询专题详情，包含专题表信息，管理员简要信息，文章列表，关注人列表
        String sql = "SELECT a.*,b.id,b.nickname,b.avatar "+
                "FROM t_topic a " +
-               "LEFT JOIN t_user b" +
+               "LEFT JOIN t_user b " +
                "ON a.admin_id = b.id " +
                "WHERE a.id = ? ";
        PreparedStatement pstmt = connection.prepareStatement(sql);

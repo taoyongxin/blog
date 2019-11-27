@@ -26,7 +26,7 @@ import java.util.List;
  * @Date 2019/11/14
  * @Version 1.0
  **/
-@WebServlet(urlPatterns = {"/article","/article/nickname","/article/*"})
+@WebServlet(urlPatterns = {"/article","/article/*"})
 public class ArticleController extends HttpServlet {
    private ArticleService articleService = ServiceFactory.getArticleServiceInstance();
    private static Logger logger = LoggerFactory.getLogger(ArticleController.class);
@@ -39,16 +39,26 @@ public class ArticleController extends HttpServlet {
            System.out.println("进入到A1处");
        }else if(reqPath.equals("/article/nickname")){
            getAuthorNickName(req,resp);
-       }else{
+       }else if (reqPath.equals("/article/hot")){
+           getHotArticles(req,resp);
+       } else{
            System.out.println(11);
            getArticleById(req,resp);
        }
+
     }
     private void getAuthorNickName(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException{
         Gson gson = new GsonBuilder().create();
         ResponseObject ro = new ResponseObject().success(200,"成功",articleService.getAuthorNickName());
         PrintWriter out = resp.getWriter();
         out.print(gson.toJson(ro));
+        out.close();
+    }
+    private void getHotArticles(HttpServletRequest req,HttpServletResponse resp) throws ServletException, IOException {
+        Gson gson = new GsonBuilder().create();
+        Result result = articleService.getHotArticles();
+        PrintWriter out = resp.getWriter();
+        out.print(gson.toJson(result));
         out.close();
     }
     private void  getArticle(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
@@ -84,6 +94,16 @@ public class ArticleController extends HttpServlet {
         out.close();
     }
 
+    private void  selectArticleByUserId(HttpServletRequest req,HttpServletResponse resp)throws ServletException,IOException{
+        String info = req.getPathInfo().trim();
+        //取路径参数
+        String userId = info.substring(info.indexOf("/")+1);
+        Result result = articleService.selectByUserId(Long.parseLong(userId));
+        Gson gson = new GsonBuilder().create();
+        PrintWriter out = resp.getWriter();
+        out.print(gson.toJson(result));
+        out.close();
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

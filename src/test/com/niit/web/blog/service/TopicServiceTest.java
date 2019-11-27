@@ -11,8 +11,9 @@ public class TopicServiceTest {
 
     private TopicService topicService = ServiceFactory.getTopicServiceInstance();
 
+
     /**
-     * 查询热门专题
+     * 测试查询热门专题
      */
     @Test
     public void listtopic() {
@@ -27,15 +28,27 @@ public class TopicServiceTest {
         System.out.println(topics.size());
     }*/
 
+    /**
+     * 测试获取热门专题
+     */
     @Test
     public void getHotTopic() {
         Result result = topicService.getHotTopics();
         System.out.println(result);
     }
 
+    /**
+     * 测试获取所有专题
+     */
     @Test
     public void getAllTopic() {
         Result result = topicService.getAllTopic();
         System.out.println(result);
+    }
+
+    @Test
+    public void getTopic() {
+        Result result = topicService.getTopic(2);
+        System.out.println(result.getData());
     }
 }

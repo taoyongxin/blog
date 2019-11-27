@@ -30,9 +30,13 @@ public class UserDaoTest {
         }
     }
 
+    /**
+     * 封装后测试通过手机号查询数据
+     * @throws SQLException
+     */
     @Test
     public void findUserByMobile() throws SQLException {
-        User userList = userDao.findUserByMobile("13908706554");
+        User userList = userDao.findUserByMobile("13963639549");
         System.out.println(userList);
     }
 

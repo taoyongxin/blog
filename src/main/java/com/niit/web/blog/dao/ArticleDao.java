@@ -52,4 +52,18 @@ public interface ArticleDao {
      */
     List<ArticleVo> selectByTopicId(long topicId) throws SQLException;
 
+    /**
+     * 查询热门文章返回视图集合
+     * @return
+     * @throws SQLException
+     */
+    List<ArticleVo> selectHotArticles() throws SQLException;
+
+    /**
+     * 根据用户id查询该用户所有的文章数据
+     * @param userId
+     * @return
+     * @throws SQLException
+     */
+    List<ArticleVo> selectByUserId(long userId) throws SQLException;
 }

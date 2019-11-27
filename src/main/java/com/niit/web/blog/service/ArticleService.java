@@ -36,4 +36,12 @@ public interface ArticleService {
      */
     Result selectByTopicId(Long topicId);
 
+    /**
+     * 获取热门文章
+     * @return
+     */
+    Result getHotArticles();
+
+    Result selectByUserId(Long userId);
+
 }

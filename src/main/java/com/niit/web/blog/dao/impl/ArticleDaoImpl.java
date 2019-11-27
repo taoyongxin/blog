@@ -127,31 +127,14 @@ public class ArticleDaoImpl implements ArticleDao {
         PreparedStatement pst = connection.prepareStatement(sql);
         pst.setLong(1,id);
         ResultSet rs = pst.executeQuery();
-       /* ArticleVo articleVo = BeanHandler.convertArticle(rs).get(0);
+        ArticleVo articleVo = BeanHandler.convertArticle(rs).get(0);
         rs.previous();
-        articleVo.getArticle().setContent(rs.getString(("content")));*/
-        ArticleVo articleVo = null;
-        if (rs.next()){
-            articleVo = new ArticleVo();
-            articleVo.setId(rs.getLong("id"));
-            articleVo.setUser_id(rs.getLong("user_id"));
-            articleVo.setTopic_id(rs.getLong("topic_id"));
-            articleVo.setTitle(rs.getString("title"));
-            articleVo.setArticle_pic(rs.getString("article_pic"));
-            articleVo.setContent(rs.getString("content"));
-            articleVo.setSummary(rs.getString("summary"));
-            articleVo.setPraise(rs.getInt("praise"));
-            articleVo.setComment(rs.getInt("comment"));
-            articleVo.setCreate_time(rs.getTimestamp("creat_time").toLocalDateTime());
-            articleVo.setNickname(rs.getString("nickname"));
-            articleVo.setAvatar(rs.getString("avatar"));
-            articleVo.setTopic_name(rs.getString("topic_name"));
-            articleVo.setLogo(rs.getString("logo"));
-
-        }
-        DbUtil.close(connection,pst, rs);
+        articleVo.getArticle().setContent(rs.getString("content"));
+        DbUtil.close(connection,pst,rs);
         return articleVo;
     }
+
+
 
     @Override
     public List<ArticleVo> selectByTopicId(long topicId) throws SQLException {
@@ -171,5 +154,43 @@ public class ArticleDaoImpl implements ArticleDao {
         return articleVos;
     }
 
+    @Override
+    public List<ArticleVo> selectHotArticles() throws SQLException {
+        Connection connection = DbUtil.getConnection();
+        /*从文章 专题 用户 三表联查出前端需要展示的数据*/
+        String sql = "SELECT a.id,a.user_id,a.topic_id,a.title,a.summary,a.article_pic,a.comment,a.praise,a.creat_time," +
+                "b.topic_name,b.logo,c.nickname,c.avatar " +
+                "FROM t_article a " +
+                "LEFT JOIN t_topic b " +
+                "ON a.topic_id = b.id " +
+                "LEFT JOIN t_user c " +
+                "ON a.user_id = c.id " +
+                "ORDER BY a.comment DESC " +
+                "LIMIT 10 ";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery();
+        //调用分装的方法 将结果集解析成list
+        List<ArticleVo> articleVoList = BeanHandler.convertArticle(rs);
+        DbUtil.close(connection,pstmt,rs);
+        return articleVoList;
+    }
 
+    @Override
+    public List<ArticleVo> selectByUserId(long userId) throws SQLException {
+        Connection connection = DbUtil.getConnection();
+        /*从文章 专题 用户表联查出前端需要展示的数据*/
+        String sql = "SELECT a.*,b.topic_name,b.logo,c.nickname,c.avatar " +
+                "FROM t_article a " +
+                "LEFT JOIN t_topic b " +
+                "ON a.topic_id = b.id " +
+                "LEFT JOIN t_user c " +
+                "ON a.user_id = c.id " +
+                "WHERE a.user_id = ? " ;
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setLong(1,userId);
+        ResultSet rs = pstmt.executeQuery();
+        List<ArticleVo> articleVos = BeanHandler.convertArticle(rs);
+        DbUtil.close(connection,pstmt,rs);
+        return articleVos;
+    }
 }
