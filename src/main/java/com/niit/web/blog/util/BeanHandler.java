@@ -101,9 +101,9 @@ public class BeanHandler {
                 topic.setLogo(rs.getString("logo"));
 
                 //给文章视图对象设置三块内容
-               /* articleVo.setArticle(article);
+                articleVo.setArticle(article);
                 articleVo.setAuthor(author);
-                articleVo.setTopic(topic);*/
+                articleVo.setTopic(topic);
                 //加入列表
                 articleVoList.add(articleVo);
             }

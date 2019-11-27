@@ -1,6 +1,7 @@
 package com.niit.web.blog.dao;
 
 import com.niit.web.blog.domain.dto.UserDto;
+import com.niit.web.blog.domain.vo.UserVo;
 import com.niit.web.blog.entity.User;
 import com.niit.web.blog.factory.DaoFactory;
 import com.niit.web.blog.util.JSoupSpider;
@@ -37,8 +38,8 @@ public class UserDaoTest {
 
     @Test
     public void selectAll() throws SQLException {
-        List<User> users = userDao.selectAll();
-        users.forEach(user -> System.out.println(user));
+        List<User> userList = userDao.selectAll();
+        userList.forEach(user -> System.out.println(user));
     }
 
     @Test
@@ -49,8 +50,8 @@ public class UserDaoTest {
 
     @Test
     public void getUser() throws SQLException {
-        User user = userDao.getUser(1);
-        System.out.println(user);
+        UserVo userVo = userDao.getUser(1);
+        System.out.println(userVo);
     }
 
     /**

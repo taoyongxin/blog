@@ -2,14 +2,15 @@ package com.niit.web.blog.dao.impl;
 
 import com.niit.web.blog.dao.UserDao;
 import com.niit.web.blog.domain.dto.UserDto;
+import com.niit.web.blog.domain.vo.UserVo;
 import com.niit.web.blog.entity.User;
+import com.niit.web.blog.util.BeanHandler;
 import com.niit.web.blog.util.DbUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -111,7 +112,7 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public List<User> selectAll() throws SQLException {
-        List<User> userList = new ArrayList<>();
+       /* List<User> userList = new ArrayList<>();
         Connection connection = DbUtil.getConnection();
         String sql ="SELECT * FROM t_user ORDER BY id DESC";
         PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -124,12 +125,20 @@ public class UserDaoImpl implements UserDao {
             user.setIntroduction(rs.getString("introduction"));
             userList.add(user);
         }
+        return userList;*/
+       Connection connection =DbUtil.getConnection();
+       String sql = "SELECT * FROM t_user ORDER BY id DESC";
+       PreparedStatement pst = connection.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        List<User> userList = BeanHandler.convertUser(rs);
+        DbUtil.close(connection,pst,rs);
         return userList;
+
     }
 
     @Override
     public List<User> selectHotUsers() throws SQLException {
-        Connection connection = DbUtil.getConnection();
+        /*Connection connection = DbUtil.getConnection();
         String sql = "SELECT * FROM t_user ORDER BY fans DESC LIMIT 10";
         PreparedStatement pst =  connection.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
@@ -147,10 +156,34 @@ public class UserDaoImpl implements UserDao {
             logger.error("查询热门用户数据产生异常");
         }
         DbUtil.close(connection,pst, rs);
-        return userList;
+        return userList;*/
+        /**
+         * 封装后
+         */
+        Connection connection = DbUtil.getConnection();
+        String sql = "SELECT * FROM t_user ORDER BY fans DESC LIMIT 10";
+        PreparedStatement pst =  connection.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        List<User> userList = BeanHandler.convertUser(rs);
+        DbUtil.close(connection,pst,rs);
+        return  userList;
     }
 
     @Override
+    public UserVo getUser(long id) throws SQLException {
+        Connection connection = DbUtil.getConnection();
+        String sql = "SELECT * FROM t_user WHERE id = ? ";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setLong(1,id);
+        ResultSet rs = pstmt.executeQuery();
+        UserVo userVo = new UserVo();
+        User user = BeanHandler.convertUser(rs).get(0);
+        userVo.setUser(user);
+        DbUtil.close(connection,pstmt,rs);
+        return userVo;
+    }
+
+   /* @Override
     public User getUser(long id) throws SQLException {
        Connection connection = DbUtil.getConnection();
        String sql = "SELECT * FROM t_user WHERE id = ? ";
@@ -174,7 +207,7 @@ public class UserDaoImpl implements UserDao {
            user.setCreateTime(rs.getTimestamp("create_time").toLocalDateTime());
        }
        return user;
-    }
+    }*/
 
 
 }

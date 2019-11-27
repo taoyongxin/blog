@@ -24,6 +24,7 @@ public class TopicDaoTest {
     @Test
     public void selectHotTopics() throws SQLException{
         List<Topic> topicList = topicDao.selectHotTopics();
+        System.out.println(topicList.size());
         topicList.forEach(topic -> System.out.println(topic));
     }
 
@@ -32,6 +33,8 @@ public class TopicDaoTest {
         TopicVo topic = topicDao.getTopic(2);
         System.out.println(topic);
     }
+
+
 
     @Test
     public void selectAllTopic() throws SQLException{

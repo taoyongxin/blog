@@ -1,10 +1,8 @@
 package com.niit.web.blog.service;
 
 import com.niit.web.blog.domain.dto.UserDto;
-import com.niit.web.blog.entity.User;
 import com.niit.web.blog.util.Result;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,13 +30,19 @@ public interface UserService {
      * 查询所有用户
      * @return
      */
-    List<User> listUser();
+    /*List<User> listUser();*/
+
+    Result getAllUsers();
 
     /**
      * 查询前十高粉丝量用户
      * @return
      */
-    List<User> listHotUsers();
+   /* List<User> listHotUsers();*/
+
+    Result getHotUsers();
+
+
 
     Result getUser(long id);
 }

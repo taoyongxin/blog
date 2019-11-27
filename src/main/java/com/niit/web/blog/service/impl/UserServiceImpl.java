@@ -2,6 +2,7 @@ package com.niit.web.blog.service.impl;
 
 import com.niit.web.blog.dao.UserDao;
 import com.niit.web.blog.domain.dto.UserDto;
+import com.niit.web.blog.domain.vo.UserVo;
 import com.niit.web.blog.entity.User;
 import com.niit.web.blog.factory.DaoFactory;
 import com.niit.web.blog.service.UserService;
@@ -69,6 +70,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Result getAllUsers() {
+        List<User> userList = null;
+        try {
+            userList = userDao.selectAll();
+        } catch (SQLException e) {
+            logger.error("获取热门用户");
+        }
+        if (userList != null){
+            return Result.success(userList);
+        }else {
+            return Result.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
+    }
+
+    @Override
+    public Result getHotUsers() {
+        List<User> userList = null;
+        try {
+            userList = userDao.selectHotUsers();
+        } catch (SQLException e) {
+            logger.error("获取所有用户");
+        }
+        if (userList != null){
+            return Result.success(userList);
+        }else {
+            return Result.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
+    }
+
+
+
+   /* @Override
     public List<User> listUser() {
         List<User> users = null;
         try {
@@ -77,9 +110,9 @@ public class UserServiceImpl implements UserService {
             System.err.println("查询用户操作失败");
         }
         return users;
-    }
+    }*/
 
-    @Override
+   /* @Override
     public List<User> listHotUsers() {
         List<User> users = null;
         try {
@@ -88,11 +121,11 @@ public class UserServiceImpl implements UserService {
             System.err.println("查询热门用户操作失败");
         }
         return users;
-    }
+    }*/
 
     @Override
     public Result getUser(long id) {
-        User user = null;
+        UserVo user = null;
         try {
             user = userDao.getUser(id);
         } catch (SQLException e) {

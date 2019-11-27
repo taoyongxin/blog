@@ -3,7 +3,6 @@ package com.niit.web.blog.controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.niit.web.blog.domain.dto.UserDto;
-import com.niit.web.blog.entity.User;
 import com.niit.web.blog.factory.ServiceFactory;
 import com.niit.web.blog.service.UserService;
 import com.niit.web.blog.util.Message;
@@ -20,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -112,7 +110,7 @@ public class UserController extends HttpServlet {
         }
     }
     protected void getUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<User> userList=userService.listUser();
+        /*List<User> userList=userService.listUser();
         Gson gson = new GsonBuilder().create();
         ResponseObject ro =new ResponseObject();
         ro.setCode(resp.getStatus());
@@ -124,10 +122,16 @@ public class UserController extends HttpServlet {
         ro.setData(userList);
         PrintWriter out=resp.getWriter();
         out.print(gson.toJson(ro));
+        out.close();*/
+        Gson gson = new GsonBuilder().create();
+        Result result = userService.getAllUsers();
+        PrintWriter out = resp.getWriter();
+        out.print(gson.toJson(result));
         out.close();
+
     }
     protected void getHotUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<User> userList=userService.listHotUsers();
+        /*List<User> userList=userService.listHotUsers();
         ResponseObject ro =new ResponseObject();
         Gson gson = new GsonBuilder().create();
         ro.setCode(resp.getStatus());
@@ -139,13 +143,18 @@ public class UserController extends HttpServlet {
         ro.setData(userList);
         PrintWriter out=resp.getWriter();
         out.print(gson.toJson(ro));
+        out.close();*/
+        Gson gson = new GsonBuilder().create();
+        Result result = userService.getHotUsers();
+        PrintWriter out = resp.getWriter();
+        out.print(gson.toJson(result));
         out.close();
     }
     private void getUserById(HttpServletRequest req,HttpServletResponse resp) throws ServletException,IOException{
         String info = req.getPathInfo().trim();
         String id = info.substring(info.indexOf("/")+1);
-        Result result = userService.getUser(Long.parseLong(id));
         Gson gson = new GsonBuilder().create();
+        Result result = userService.getUser(Long.parseLong(id));
         PrintWriter out = resp.getWriter();
         out.print(gson.toJson(result));
         out.close();

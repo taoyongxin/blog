@@ -1,7 +1,10 @@
 package com.niit.web.blog.domain.vo;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import com.niit.web.blog.entity.Topic;
+import com.niit.web.blog.entity.User;
+import lombok.Data;
+
+import java.util.List;
 
 /**
  * @author Tao
@@ -10,8 +13,9 @@ import java.time.LocalDateTime;
  * @Date 2019/11/25
  * @Version 1.0
  **/
+@Data
 public class UserVo {
-    private Long id;
+    /*private Long id;
     private String mobile;
     private String nickname;
     private String avatar;
@@ -22,5 +26,10 @@ public class UserVo {
     private int follows;
     private int fans;
     private int articles;
-    private LocalDateTime create_time;
+    private LocalDateTime create_time;*/
+
+    private User user;
+    private List<ArticleVo> articleVoList;
+    private List<Topic> topicList;
+    private List<User> fansList;
 }

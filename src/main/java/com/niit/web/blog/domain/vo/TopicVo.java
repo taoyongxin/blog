@@ -1,9 +1,9 @@
 package com.niit.web.blog.domain.vo;
 
-import com.niit.web.blog.domain.dto.SimpleUser;
+import com.niit.web.blog.entity.Topic;
+import com.niit.web.blog.entity.User;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -15,7 +15,7 @@ import java.util.List;
  **/
 @Data
 public class TopicVo {
-    private Long id;
+   /* private Long id;
     private Long admin_id;
     private String topic_name;
     private String logo;
@@ -25,5 +25,9 @@ public class TopicVo {
     private LocalDateTime create_time;
     private List<ArticleVo> articleList;
     private SimpleUser simpleUser;
-    private List<SimpleUser> simpleUsers;
+    private List<SimpleUser> simpleUsers;*/
+    private Topic topic;
+    private User admin;
+    private List<ArticleVo> articleList;
+    private List<User> followList;
 }

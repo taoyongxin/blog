@@ -1,5 +1,8 @@
 package com.niit.web.blog.domain.vo;
 
+import com.niit.web.blog.entity.Article;
+import com.niit.web.blog.entity.Topic;
+import com.niit.web.blog.entity.User;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -29,7 +32,7 @@ public class ArticleVo {
     private LocalDateTime create_time;
     private long admin_id;
 
-   /* private Article article;
+    private Article article;
     private User author;
-    private Topic topic;*/
+    private Topic topic;
 }

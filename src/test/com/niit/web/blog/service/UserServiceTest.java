@@ -1,12 +1,10 @@
 package com.niit.web.blog.service;
 
 import com.niit.web.blog.domain.dto.UserDto;
-import com.niit.web.blog.entity.User;
 import com.niit.web.blog.factory.ServiceFactory;
 import com.niit.web.blog.util.Result;
 import org.junit.Test;
 
-import java.util.List;
 import java.util.Map;
 
 public class UserServiceTest {
@@ -21,16 +19,14 @@ public class UserServiceTest {
     }
 
     @Test
-    public void ListHotUsers() {
-        List<User> users = userService.listHotUsers();
-        users.forEach(user -> System.out.println(user));
-        System.out.println(users.size());
+    public void getHotUsers() {
+        Result result = userService.getHotUsers();
+        System.out.println(result);
     }
     @Test
     public void ListAllUsers() {
-        List<User> users = userService.listUser();
-        users.forEach(user -> System.out.println(user));
-        System.out.println(users.size());
+        Result result = userService.getAllUsers();
+        System.out.println(result);
     }
 
     @Test
@@ -38,4 +34,6 @@ public class UserServiceTest {
         Result result  = userService.getUser(1);
         System.out.println(result.getData());
     }
+
+
 }

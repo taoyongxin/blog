@@ -1,6 +1,7 @@
 package com.niit.web.blog.dao;
 
 import com.niit.web.blog.domain.dto.UserDto;
+import com.niit.web.blog.domain.vo.UserVo;
 import com.niit.web.blog.entity.User;
 
 import java.sql.SQLException;
@@ -46,7 +47,8 @@ public interface UserDao {
      * @return
      * @throws SQLException
      */
-    User getUser(long id) throws SQLException;
+    /*User getUser(long id) throws SQLException;*/
+    UserVo getUser(long id) throws SQLException;
 
     /**
      * 新增用户

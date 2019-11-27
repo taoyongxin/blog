@@ -1,6 +1,7 @@
 package com.niit.web.blog.service;
 
 import com.niit.web.blog.entity.Topic;
+import com.niit.web.blog.util.Result;
 
 import java.util.List;
 
@@ -22,8 +23,14 @@ public interface TopicService {
      * 查询所有专题
      * @return
      */
-    List<Topic> ListAllTopic();
+    /*List<Topic> ListAllTopic();*/
+    Result getAllTopic();
 
+    /**
+     * 获取热门专题
+     * @return
+     */
+    Result getHotTopics();
     /**
      * 根据id获取专题的详细信息
      * @param id

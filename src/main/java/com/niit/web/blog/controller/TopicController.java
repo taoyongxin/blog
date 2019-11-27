@@ -2,10 +2,9 @@ package com.niit.web.blog.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.niit.web.blog.entity.Topic;
 import com.niit.web.blog.factory.ServiceFactory;
 import com.niit.web.blog.service.TopicService;
-import com.niit.web.blog.util.ResponseObject;
+import com.niit.web.blog.util.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 /**
  * @author Tao
@@ -40,8 +38,19 @@ public class TopicController extends HttpServlet {
             getAllTopic(req,resp);
         }
     }
+
+    /**
+     * 获取热门专题
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     private void getHotTopic(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        List<Topic> topics = topicService.listtopic();
+        /**
+         * 未封装之前
+         */
+        /*List<Topic> topics = topicService.listtopic();
         ResponseObject ro = new ResponseObject();
         Gson gson = new GsonBuilder().create();
         ro.setCode(resp.getStatus());
@@ -53,10 +62,26 @@ public class TopicController extends HttpServlet {
         ro.setData(topics);
         PrintWriter out = resp.getWriter();
         out.print(gson.toJson(ro));
+        out.close();*/
+        Gson gson = new GsonBuilder().create();
+        Result result = topicService.getHotTopics();
+        PrintWriter out = resp.getWriter();
+        out.print(gson.toJson(result));
         out.close();
     }
+
+    /**
+     * 获取所有专题
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     private void getAllTopic(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        List<Topic> topics = topicService.ListAllTopic();
+        /**
+         * 未封装
+         */
+      /*  List<Topic> topics = topicService.ListAllTopic();
         ResponseObject ro = new ResponseObject();
         Gson gson = new GsonBuilder().create();
         ro.setCode(resp.getStatus());
@@ -68,6 +93,11 @@ public class TopicController extends HttpServlet {
         ro.setData(topics);
         PrintWriter out = resp.getWriter();
         out.print(gson.toJson(ro));
-        out.close();
+        out.close();*/
+      Gson gson = new GsonBuilder().create();
+      Result result = topicService.getAllTopic();
+      PrintWriter out = resp.getWriter();
+      out.print(gson.toJson(result));
+      out.close();
     }
 }
