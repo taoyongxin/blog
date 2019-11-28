@@ -56,4 +56,11 @@ public interface ArticleService {
      * @return
      */
     Result getArticlesByPage(int currentPage,int count);
+
+    /**
+     * 模糊查询文章
+     * @param keywords
+     * @return
+     */
+    Result selectByKeywords(String keywords);
 }

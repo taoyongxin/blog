@@ -77,4 +77,7 @@ public interface ArticleDao {
      */
     List<ArticleVo> selectByPage(int currentPage,int count) throws SQLException;
 
+    List<ArticleVo> selectByKeywords(String keywords)throws SQLException;
+
+
 }

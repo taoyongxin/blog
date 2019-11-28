@@ -69,6 +69,11 @@ public class ArticleDaoTest {
             e.printStackTrace();
         }
         articleVoList.forEach(System.out::println);
+    }
 
+    @Test
+    public void selectByKeywords() throws SQLException{
+        List<ArticleVo> articleVoList = articleDao.selectByKeywords("架构");
+        articleVoList.forEach(a-> System.out.println(a));
     }
 }

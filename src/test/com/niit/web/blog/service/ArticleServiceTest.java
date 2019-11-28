@@ -64,4 +64,13 @@ public class ArticleServiceTest {
         Result result = articleService.selectByUserId(Long.parseLong(String.valueOf(8)));
         System.out.println(result.getData());
     }
+
+    /**
+     * 测试根据关键字进行模糊查询
+     */
+    @Test
+    public void selectByKeywords() {
+        Result result = articleService.selectByKeywords("掘金");
+        System.out.println(result);
+    }
 }

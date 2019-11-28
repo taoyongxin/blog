@@ -212,4 +212,24 @@ public class ArticleDaoImpl implements ArticleDao {
         return articleVos;
 
     }
+
+    @Override
+    public List<ArticleVo> selectByKeywords(String keywords) throws SQLException {
+        Connection connection = DbUtil.getConnection();
+        /*三表联查前端所需数据*/
+        String sql = "SELECT a.*,b.topic_name,b.logo,c.nickname,c.avatar " +
+                "FROM t_article a " +
+                "LEFT JOIN t_topic b " +
+                "ON a.topic_id = b.id " +
+                "LEFT JOIN t_user c " +
+                "ON a.user_id = c.id " +
+                "WHERE a.title LIKE ? OR a.summary LIKE ? ";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setString(1,"%" + keywords + "%");
+        pstmt.setString(2,"%" + keywords + "%");
+        ResultSet rs = pstmt.executeQuery();
+        List<ArticleVo> articleVos = BeanHandler.convertArticle(rs);
+        DbUtil.close(connection,pstmt,rs);
+        return articleVos;
+    }
 }

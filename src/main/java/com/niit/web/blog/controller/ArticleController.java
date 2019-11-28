@@ -37,9 +37,12 @@ public class ArticleController extends HttpServlet {
        if (reqPath.equals("/article")){
            String page = req.getParameter("page");
            String count = req.getParameter("count");
+           String keywords = req.getParameter("keywords");
            if (page != null){
                getArticlesByPage(resp,Integer.parseInt(page),Integer.parseInt((count)));
-           }else {
+           } else if (keywords != null){
+               getArticlesByWords(resp,keywords);
+           } else {
                getArticle(req,resp);
                System.out.println("进入到A1处");
            }
@@ -83,12 +86,14 @@ public class ArticleController extends HttpServlet {
         out.print(gson.toJson(ro));
         out.close();
     }
-    private void getArticleByWords(HttpServletResponse resp,String keywords) throws ServletException,IOException{
-
+    private void getArticlesByWords(HttpServletResponse resp,String keywords) throws ServletException,IOException{
+        Gson gson = new GsonBuilder().create();
+        Result result = articleService.selectByKeywords(keywords);
+        PrintWriter out = resp.getWriter();
+        out.print(gson.toJson(result));
+        out.close();
     }
-    private void getArticleByCreateTime(HttpServletRequest req , HttpServletResponse resp) {
 
-    }
     private void getArticleById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String info = req.getPathInfo().trim();
         //取得路径参数

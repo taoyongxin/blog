@@ -24,6 +24,11 @@ import java.util.List;
 public class ArticleServiceImpl implements ArticleService {
     private ArticleDao articleDao = DaoFactory.getArticleDaoInstance();
     private static Logger logger = LoggerFactory.getLogger(ArticleServiceImpl.class);
+
+    /**
+     * 查询所有书籍
+     * @return
+     */
     @Override
     public List<Article> listarticle() {
         List<Article> articles = null;
@@ -35,6 +40,10 @@ public class ArticleServiceImpl implements ArticleService {
         return articles;
     }
 
+    /**
+     * 通过文章表的user_id查询用户表的该用户的昵称
+     * @return
+     */
     @Override
     public List<ArticleVo> getAuthorNickName() {
         List<ArticleVo> articleVoList= new ArrayList<>(20);
@@ -46,6 +55,11 @@ public class ArticleServiceImpl implements ArticleService {
         return articleVoList;
     }
 
+    /**
+     * 查询指定id的文章信息
+     * @param id
+     * @return
+     */
     @Override
     public Result getArticle(long id) {
         ArticleVo articleVo = null;
@@ -61,6 +75,11 @@ public class ArticleServiceImpl implements ArticleService {
         }
     }
 
+    /**
+     * 查询所属专题的文章
+     * @param topicId
+     * @return
+     */
     @Override
     public Result selectByTopicId(Long topicId) {
         List<ArticleVo> articleVo = null;
@@ -76,6 +95,10 @@ public class ArticleServiceImpl implements ArticleService {
         }
     }
 
+    /**
+     * 获取热门用户
+     * @return
+     */
     @Override
     public Result getHotArticles() {
         List<ArticleVo> articleList = null;
@@ -91,6 +114,11 @@ public class ArticleServiceImpl implements ArticleService {
         }
     }
 
+    /**
+     * 通过用户id查询该用户发布的文章
+     * @param userId
+     * @return
+     */
     @Override
     public Result selectByUserId(Long userId) {
         List<ArticleVo> articleVo = null;
@@ -106,6 +134,12 @@ public class ArticleServiceImpl implements ArticleService {
         }
     }
 
+    /**
+     * 分页查询
+     * @param currentPage
+     * @param count
+     * @return
+     */
     @Override
     public Result getArticlesByPage(int currentPage, int count) {
         List<ArticleVo> articleVoList = null;
@@ -113,6 +147,21 @@ public class ArticleServiceImpl implements ArticleService {
             articleVoList = articleDao.selectByPage(currentPage,count);
         } catch (SQLException e) {
             logger.error("分页查询文章出现异常");
+        }
+        if(articleVoList != null){
+            return Result.success(articleVoList);
+        }else {
+            return Result.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
+    }
+
+    @Override
+    public Result selectByKeywords(String keywords) {
+        List<ArticleVo> articleVoList = null;
+        try {
+            articleVoList = articleDao.selectByKeywords(keywords);
+        } catch (SQLException e) {
+            logger.error("根据关键字查询文章出现异常");
         }
         if(articleVoList != null){
             return Result.success(articleVoList);
