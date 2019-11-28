@@ -50,9 +50,25 @@ public class ArticleDaoTest {
         System.out.println(articles.size());
     }
 
+    /**
+     * 测试通过用户id查询此用户发表的文章
+     * @throws SQLException
+     */
     @Test
     public void selectByUserId() throws SQLException{
         List<ArticleVo> articleVoList =  articleDao.selectByUserId(8);
         articleVoList.forEach(a-> System.out.println(a));
+    }
+
+    @Test
+    public void selectByPage() {
+        List<ArticleVo> articleVoList = null;
+        try {
+            articleVoList = articleDao.selectByPage(1,10);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        articleVoList.forEach(System.out::println);
+
     }
 }

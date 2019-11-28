@@ -35,8 +35,14 @@ public class ArticleController extends HttpServlet {
        String reqPath = req.getRequestURI().trim();
        System.out.println(reqPath);
        if (reqPath.equals("/article")){
-           getArticle(req,resp);
-           System.out.println("进入到A1处");
+           String page = req.getParameter("page");
+           String count = req.getParameter("count");
+           if (page != null){
+               getArticlesByPage(resp,Integer.parseInt(page),Integer.parseInt((count)));
+           }else {
+               getArticle(req,resp);
+               System.out.println("进入到A1处");
+           }
        }else if(reqPath.equals("/article/nickname")){
            getAuthorNickName(req,resp);
        }else if (reqPath.equals("/article/hot")){
@@ -105,6 +111,13 @@ public class ArticleController extends HttpServlet {
         out.close();
     }
 
+    private void getArticlesByPage(HttpServletResponse resp,int page,int count)throws ServletException,IOException{
+        Gson gson = new GsonBuilder().create();
+        Result result = articleService.getArticlesByPage(page,count);
+        PrintWriter out = resp.getWriter();
+        out.print(gson.toJson(result));
+        out.close();
+    }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

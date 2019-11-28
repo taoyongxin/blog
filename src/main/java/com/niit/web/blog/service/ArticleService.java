@@ -42,6 +42,18 @@ public interface ArticleService {
      */
     Result getHotArticles();
 
+    /**
+     * 根据用户id查询该用户发布的文章
+     * @param userId
+     * @return
+     */
     Result selectByUserId(Long userId);
 
+    /**
+     *获取分页文章
+     * @param currentPage
+     * @param count
+     * @return
+     */
+    Result getArticlesByPage(int currentPage,int count);
 }

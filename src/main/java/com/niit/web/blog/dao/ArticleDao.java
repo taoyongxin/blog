@@ -66,4 +66,15 @@ public interface ArticleDao {
      * @throws SQLException
      */
     List<ArticleVo> selectByUserId(long userId) throws SQLException;
+
+    /**
+     *
+     * 分页获得文章数据
+     * @param currentPage
+     * @param count
+     * @return
+     * @throws SQLException
+     */
+    List<ArticleVo> selectByPage(int currentPage,int count) throws SQLException;
+
 }

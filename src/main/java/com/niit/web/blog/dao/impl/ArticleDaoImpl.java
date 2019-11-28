@@ -193,4 +193,23 @@ public class ArticleDaoImpl implements ArticleDao {
         DbUtil.close(connection,pstmt,rs);
         return articleVos;
     }
+
+    @Override
+    public List<ArticleVo> selectByPage(int currentPage, int count) throws SQLException {
+        Connection connection = DbUtil.getConnection();
+        String sql = "SELECT a.*,b.topic_name,b.logo,c.nickname,c.avatar " +
+                "FROM t_article a " +
+                "LEFT JOIN t_topic b " +
+                "ON a.topic_id = b.id " +
+                "LEFT JOIN t_user c " +
+                "ON a.user_id = c.id LIMIT ?,? ";
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setInt(1,(currentPage - 1) * count);
+        pstmt.setInt(2,count);
+        ResultSet rs = pstmt.executeQuery();
+        List<ArticleVo> articleVos = BeanHandler.convertArticle(rs);
+        DbUtil.close(connection,pstmt,rs);
+        return articleVos;
+
+    }
 }

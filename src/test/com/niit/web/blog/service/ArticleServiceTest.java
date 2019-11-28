@@ -30,6 +30,15 @@ public class ArticleServiceTest {
     }
 
     /**
+     * 测试分页
+     */
+    @Test
+    public void getArticlesByPage() {
+        Result result = articleService.getArticlesByPage(2,10);
+        System.out.println(result.getData());
+    }
+
+    /**
      * 测试专题id查询所属专题文章
      */
     @Test
