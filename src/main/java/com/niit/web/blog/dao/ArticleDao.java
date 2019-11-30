@@ -16,25 +16,25 @@ import java.util.List;
 public interface ArticleDao {
     /**
      * 批量增加新文章
-     * @param articlesList
+     * @param articleList
      * @return
      * @throws SQLException
      */
-    int[] batchInsert(List<Article> articlesList ) throws SQLException;
+    void batchInsert(List<Article> articleList) throws SQLException;
 
     /**
      * 查询所有数据信息
      * @return
      * @throws SQLException
      */
-    List<Article> selectAll() throws SQLException;
+    /*List<Article> selectAll() throws SQLException;*/
 
     /**
      * 双表联查 文章表用户id 获取 用户表用户昵称
      * @return
      * @throws SQLException
      */
-    List<ArticleVo> selectAuthorNickName() throws SQLException;
+  /*  List<ArticleVo> selectAuthorNickName() throws SQLException;*/
 
     /**
      * 根据id获取文章详情
@@ -76,7 +76,13 @@ public interface ArticleDao {
      * @throws SQLException
      */
     List<ArticleVo> selectByPage(int currentPage,int count) throws SQLException;
-
+    /**
+     * 根据关键字模糊查询所有文章
+     *
+     * @param keywords
+     * @return
+     * @throws SQLException
+     */
     List<ArticleVo> selectByKeywords(String keywords)throws SQLException;
 
 

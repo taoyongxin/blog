@@ -18,14 +18,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Article {
-    private long id;
-    private String title;//文章标题
-    private String article_pic;//文章附带图片
-    private int comment;//评论数
-    private int praise;//转发数
-    private long user_id;//作者用户id
-    private LocalDateTime creat_time;//发布时间
-    private String summary;//文章主体内容
+    private Long id;
+    private Long userId;
+    private Long topicId;
+    private String title;
+    private String summary;
+    private String thumbnail;
     private String content;
-    private Long topic_id;//文章所属专题id
+    private Integer likes;
+    private Integer comments;
+    private LocalDateTime createTime;
 }

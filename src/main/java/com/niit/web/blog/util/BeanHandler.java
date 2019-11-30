@@ -56,13 +56,14 @@ public class BeanHandler {
             while (rs.next()) {
                 Topic topic = new Topic();
                 topic.setId(rs.getLong("id"));
-                topic.setAdmin_id(rs.getLong("admin_id"));
-                topic.setTopic_name(rs.getString("topic_name"));
+                topic.setAdminId(rs.getLong("admin_id"));
+                topic.setTopicName(rs.getString("topic_name"));
                 topic.setLogo(rs.getString("logo"));
                 topic.setDescription(rs.getString("description"));
+                topic.setHomepage(rs.getString("homepage"));
                 topic.setArticles(rs.getInt("articles"));
                 topic.setFollows(rs.getInt("follows"));
-                topic.setCreate_time(rs.getTimestamp("create_time").toLocalDateTime());
+                topic.setCreateTime(rs.getTimestamp("create_time").toLocalDateTime());
                 topicList.add(topic);
             }
         } catch (SQLException e) {
@@ -79,14 +80,14 @@ public class BeanHandler {
                 //文章自身信息
                 Article article = new Article();
                 article.setId(rs.getLong("id"));
-                article.setUser_id(rs.getLong("user_id"));
-                article.setTopic_id(rs.getLong("topic_id"));
+                article.setUserId(rs.getLong("user_id"));
+                article.setTopicId(rs.getLong("topic_id"));
                 article.setTitle(rs.getString("title"));
                 article.setSummary(rs.getString("summary"));
-                article.setArticle_pic(rs.getString("article_pic"));
-                article.setPraise(rs.getInt("praise"));
-                article.setComment(rs.getInt("comment"));
-                article.setCreat_time(rs.getTimestamp("creat_time").toLocalDateTime());
+                article.setThumbnail(rs.getString("thumbnail"));
+                article.setLikes(rs.getInt("likes"));
+                article.setComments(rs.getInt("comments"));
+                article.setCreateTime(rs.getTimestamp("create_time").toLocalDateTime());
 
                 //作者信息
                 User author = new User();
@@ -95,9 +96,9 @@ public class BeanHandler {
                 author.setAvatar(rs.getString("avatar"));
 
                 //专题信息
-                Topic topic = new Topic();
+                Topic topic = new Topic    ();
                 topic.setId(rs.getLong("topic_id"));
-                topic.setTopic_name(rs.getString("topic_name"));
+                topic.setTopicName(rs.getString("topic_name"));
                 topic.setLogo(rs.getString("logo"));
 
                 //给文章视图对象设置三块内容

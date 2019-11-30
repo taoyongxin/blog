@@ -20,7 +20,7 @@ public interface TopicDao {
      * @return
      * @throws SQLException
      */
-    int[] bathInsert(List<Topic> topicList) throws SQLException;
+    void batchInsert(List<Topic> topicList) throws SQLException;
 
     /**
      * 查询热门前十个专题
@@ -44,4 +44,20 @@ public interface TopicDao {
      */
     List<Topic> selectAllTopic() throws SQLException;
 
+    /**
+     * 分页获取专题
+     * @param currentPage
+     * @param count
+     * @return
+     * @throws SQLException
+     */
+    List<Topic> selectByPage(int currentPage,int count)throws SQLException;
+
+    /**
+     * 模糊搜索专题
+     * @param keywords
+     * @return
+     * @throws SQLException
+     */
+    List<Topic> selectByKeywords(String keywords) throws SQLException;
 }

@@ -1,9 +1,13 @@
 package com.niit.web.blog.util;
 
+import com.niit.web.blog.entity.Region;
+import com.niit.web.blog.factory.DaoFactory;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -118,7 +122,34 @@ public class DataUtil {
         long bound = random.nextInt(72)+1;
         return bound;
     }
-
+    /**
+     * 随机生成地址
+     *
+     * @return
+     */
+    public static String getAddress() {
+        Random random = new Random();
+        String address = null;
+        try {
+            List<Region> regionList = DaoFactory.getRegionDaoInstance().selectAll();
+            Region region = regionList.get(random.nextInt(regionList.size()));
+            address = region.getMergeName();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return address;
+    }
+    /**
+     * 生成时间
+     *
+     * @return
+     */
+    public static LocalDateTime getCreateTime() {
+        LocalDateTime now = LocalDateTime.now();
+        Random random = new Random();
+        int bound = random.nextInt(999);
+        return now.minusHours(bound);
+    }
     /**
      * 随机生成粉丝数量
      * @return

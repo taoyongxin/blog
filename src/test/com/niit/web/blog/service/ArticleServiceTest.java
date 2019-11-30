@@ -1,11 +1,8 @@
 package com.niit.web.blog.service;
 
-import com.niit.web.blog.entity.Article;
 import com.niit.web.blog.factory.ServiceFactory;
 import com.niit.web.blog.util.Result;
 import org.junit.Test;
-
-import java.util.List;
 
 
 public class ArticleServiceTest {
@@ -14,11 +11,11 @@ public class ArticleServiceTest {
     /**
      * 查询所有文章数据
      */
-    @Test
+   /* @Test
     public void listarticle() {
         List<Article> articles = articleService.listarticle();
         articles.forEach(article -> System.out.println(article));
-    }
+    }*/
 
     /**
      * 测试指定id查询文章数据
@@ -43,7 +40,7 @@ public class ArticleServiceTest {
      */
     @Test
     public void selectByTopicId() {
-        Result result = articleService.selectByTopicId((long) 53);
+        Result result = articleService.selectByTopicId((long) 9);
         System.out.println(result.getData());
     }
 
@@ -70,7 +67,7 @@ public class ArticleServiceTest {
      */
     @Test
     public void selectByKeywords() {
-        Result result = articleService.selectByKeywords("掘金");
+        Result result = articleService.selectByKeywords("互联网");
         System.out.println(result);
     }
 }

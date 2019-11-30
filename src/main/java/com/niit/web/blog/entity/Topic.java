@@ -18,11 +18,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Topic {
     private Long id;
-    private Long admin_id;
-    private String topic_name;
+    private Long adminId;
+    private String topicName;
     private String logo;
     private String description;
+    private String homepage;
     private Integer articles;
     private Integer follows;
-    private LocalDateTime create_time;
+    private LocalDateTime createTime;
 }

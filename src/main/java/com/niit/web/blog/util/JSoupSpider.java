@@ -1,10 +1,7 @@
 package com.niit.web.blog.util;
 
-import com.niit.web.blog.entity.Address;
-import com.niit.web.blog.entity.Article;
 import com.niit.web.blog.entity.Topic;
 import com.niit.web.blog.entity.User;
-
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,8 +10,8 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.print.Book;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,72 +25,77 @@ import java.util.List;
 public class JSoupSpider {
     private static Logger logger = LoggerFactory.getLogger(JSoupSpider.class);
 
-    public static void main(String[] args) {
-        Document doc;
-        try {
-            doc = Jsoup.connect("http://www.ip33.com/area_code.html").get();
-            Elements divs = doc.getElementsByClass("ip");
-            System.out.println(divs.size());
+    private static final int PAGE_COUNT = 1;
+
+    /**
+     * 爬取简书网热门作者数据
+     *
+     * @return
+     */
+    public static List<User> getUsers() {
+        Document document = null;
+        List<User> userList = new ArrayList<>(100);
+        for (int i = 1; i <= PAGE_COUNT; i++) {
+            try {
+                document = Jsoup.connect("https://www.jianshu.com/recommendations/users?utm_source=desktop&utm_medium=index-users&page=" + i).get();
+            } catch (IOException e) {
+                logger.error("连接失败");
+            }
+            assert document != null;
+            Elements divs = document.getElementsByClass("col-xs-8");
             divs.forEach(div -> {
-
-                  Element element1= div.children().get(1).children().get(0).children().get(1);
-                  Element element2= div.children().get(1);
-                  Element element3= div.children().first();
-
-                System.out.println(element1.childNodeSize()/2);
-
-                for (int j=0;j<=(element2.childNodeSize()/2-1);j++) {
-                    for (int i = 0; i <= (element1.childNodeSize() / 2 - 1); i++) {
-                        String str2 = element2.children().get(j).children().first().toString().substring(4, element2.children().get(j).children().first().toString().indexOf(" "));
-                        String str1 = element1.children().get(i).toString().substring(4, element1.children().get(i).toString().indexOf(" "));
-                        String str3 = element3.toString().substring(4,element3.toString().indexOf(" "));
-                        String str4 = str3+str2+str1;
-                        System.out.println(str4);
-                    }
+                Element wrapDiv = div.child(0);
+                Element link = wrapDiv.child(0);
+                Elements linkChildren = link.children();
+                String introduction = linkChildren.get(2).text();
+                if (introduction != null && !"".equals(introduction)) {
+                    User user = new User();
+                    String linkHref = link.attr("href");
+                    user.setMobile(DataUtil.getMobile());
+                    user.setPassword(DataUtil.getPassword());
+                    user.setGender(DataUtil.getGender());
+                    String imgUrl = "https:" + linkChildren.get(0).attr("src");
+                    user.setAvatar(imgUrl);
+                    user.setNickname(linkChildren.get(1).text());
+                    user.setIntroduction(introduction);
+                    //头像暂作为背景banner
+                    user.setBanner(imgUrl);
+                    user.setHomepage("https://www.jianshu.com" + linkHref);
+                    user.setBirthday(DataUtil.getBirthday());
+                    user.setAddress(DataUtil.getAddress());
+                    user.setCreateTime(DataUtil.getCreateTime());
+                    user.setStatus((short) 1);
+                    userList.add(user);
                 }
             });
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+        return userList;
     }
-    /*public static List<Article> getArticles1(){
-        Document document = null;
-        List<Article> articleList = new ArrayList<>(100);
-        for (int j = 1; j <= 3; j++) {
-            try {
-                document = Jsoup.connect("https://www.jianshu.com/?page="+j).get();
-            } catch (IOException e) {
-                logger.error("连接失败");
-            }
-            Elements divs = document.getElementsByClass("have-img");
-            divs.forEach(div ->{
-                Element element = div.children().get(1).children().get(0);
-                Element element1 = div.children().get(1).children().get(1);
-                Element img = div.children().get(0).children().get(0);
-                Article article = new Article();
-                article.setTitle(element.text());
-                article.setArticlemain(element1.text());
-                article.setArticlepic("https:" + img.attr("src"));
-                article.setPublishtime(DataUtil.getPublishtime());
-                article.setUserid(DataUtil.getUserid());
-                article.setComment(DataUtil.getComment());
-                article.setPraise(DataUtil.getPraise());
-                articleList.add(article);
-            });
+
+    /**
+     * 爬取简书网文章
+     *
+     * @return
+     */
+    /*public static List<Article> getArticles() {
+        List<Topic> topicList = null;
+        try {
+            topicList = DaoFactory.getTopicDaoInstance().selectAll();
+        } catch (SQLException e) {
+            logger.error("查询所有专题失败");
         }
-        return articleList;
-    }*/
-    public static List<Article> getArticles(){
-        Document document = null;
+        assert topicList != null;
         List<Article> articleList = new ArrayList<>(100);
-        for (int i=1;i<10;i++){
+        topicList.forEach(topic -> {
+            Document document = null;
             try {
-                document = Jsoup.connect("https://www.jianshu.com/c/87b50a03a96e?order_by=top&count=50&page=" + i).get();
+                document = Jsoup.connect(topic.getHomepage()).get();
             } catch (IOException e) {
                 logger.error("连接失败");
             }
+            assert document != null;
             Elements divs = document.getElementsByClass("have-img");
-            divs.forEach(div ->{
+            divs.forEach(div -> {
                 String articleUrl = div.child(0).attr("href");
                 Document document1 = null;
                 try {
@@ -101,105 +103,51 @@ public class JSoupSpider {
                 } catch (IOException e) {
                     logger.error("连接失败");
                 }
-                Element articleElement = document1.getElementsByClass("_2rhmJa").first();
+                assert document1 != null;
+                Element articleElement = document1.getElementsByClass("_2rhmJa").get(0);
                 Article article = new Article();
-                article.setContent(articleElement.html());
                 article.setContent(articleElement.html());
                 Elements elements = div.children();
                 Element linkElement = elements.get(0);
                 Element divElement = elements.get(1);
+                article.setUserId(DataUtil.getUserId());
+                article.setTopicId(DataUtil.getUserId());
                 article.setTitle(divElement.child(0).text());
+                article.setSummary(divElement.child(1).text());
                 String img = "https:" + linkElement.child(0).attr("src");
                 int index = img.indexOf("?");
-                article.setArticle_pic(img.substring(0, index));
-                article.setSummary(divElement.child(1).text());
-                /*article.setComment(DataUtil.getComment());
-                article.setPraise(DataUtil.getPraise());*/
+                article.setThumbnail(img.substring(0, index));
                 Elements metaChildren = divElement.child(2).children();
                 String comments = metaChildren.get(2).text();
                 String likes = metaChildren.last().text();
-                article.setComment(Integer.parseInt(comments));
-                article.setPraise(Integer.parseInt(likes));
-                article.setUser_id(DataUtil.getUser_id());
-                article.setCreat_time(DataUtil.getPublishtime());
-                article.setTopic_id( DataUtil.getTopicId());
+                try {
+                    article.setComments(Integer.parseInt(comments));
+                    article.setLikes(Integer.parseInt(likes));
+                } catch (NumberFormatException e) {
+                    logger.error("格式转换异常");
+                }
+                article.setCreateTime(DataUtil.getCreateTime());
                 articleList.add(article);
             });
-        }
-        System.out.println(articleList.size());
-        return articleList;
-    }
-    public static List<User> getUsers() {
-        Document document = null;
-        List<User> userList = new ArrayList<>(100);
-        for (int i = 1; i <= 3; i++) {
-            try {
-                document = Jsoup.connect("https://www.jianshu.com/recommendations/users?utm_source=desktop&utm_medium=index-users&page=" + i).get();
-            } catch (IOException e) {
-                logger.error("连接失败");
-            }
-            Elements divs = document.getElementsByClass("col-xs-8");
-            divs.forEach(div -> {
-                Element wrapDiv = div.child(0);
-                Element link = wrapDiv.child(0);
-                Elements linkChildren = link.children();
-                User user = new User();
-                user.setMobile(DataUtil.getMobile());
-                user.setPassword(DataUtil.getPassword());
-                user.setGender(DataUtil.getGender());
-                user.setAvatar("https:" + linkChildren.get(0).attr("src"));
-                user.setNickname(linkChildren.get(1).text());
-                user.setIntroduction(linkChildren.get(2).text());
-                user.setBirthday(DataUtil.getBirthday());
-                user.setCreateTime(LocalDateTime.now());
-                user.setFans(DataUtil.getFans());
-                user.setFollows(DataUtil.getFollows());
-                user.setArticles(DataUtil.getFollows());
-                userList.add(user);
-            });
-        }
-        return userList;
-    }
-    public static List<Address> getAddress(){
-        Document document = null;
-        List<Address> addressList = new ArrayList<>(100);
-        try {
-            document = Jsoup.connect("http://www.ip33.com/area_code.html").get();
-        } catch (IOException e) {
-            logger.error("连接失败");
-        }
-        Elements divs = document.getElementsByClass("ip");
-        divs.forEach(div -> {
-
-            Element element1= div.children().get(1).children().get(0).children().get(1);
-            Element element2= div.children().get(1);
-            Element element3= div.children().first();
-
-            System.out.println(element1.childNodeSize()/2);
-
-            for (int j=0;j<=(element2.childNodeSize()/2-1);j++) {
-                for (int i = 0; i <= (element1.childNodeSize() / 2 - 1); i++) {
-                    String str2 = element2.children().get(j).children().first().toString().substring(4, element2.children().get(j).children().first().toString().indexOf(" "));
-                    String str1 = element1.children().get(i).toString().substring(4, element1.children().get(i).toString().indexOf(" "));
-                    String str3 = element3.toString().substring(4,element3.toString().indexOf(" "));
-                    String str4 = str3+str2+str1;
-                    Address address = new Address();
-                    address.setAddress(str4);
-                    addressList.add(address);
-                }
-            }
         });
-        System.out.println(addressList.size());
-        return addressList;
-    }
-    public static List<Topic> getTopics(){
-        List<Topic> topicList= new ArrayList<>(100);
+        return articleList;
+    }*/
+
+    /**
+     * 爬取简书网专题
+     *
+     * @return
+     */
+    public static List<Topic> getTopics() {
+        List<Topic> topicList = new ArrayList<>(100);
         Connection connection;
         Document document = null;
-        for (int i=1 ; i<=3; i++){
+        for (int i = 1; i <= PAGE_COUNT; i++) {
             try {
+                //分析页面得到url和惨
                 connection = Jsoup.connect("https://www.jianshu.com/recommendations/collections?order_by=hot&page=" + i);
-                connection.header("X-PJAX","true");
+                //通过chrome开发者工具查看该请求必须添加请求头
+                connection.header("X-PJAX", "true");
                 document = connection.get();
             } catch (IOException e) {
                 logger.error("连接失败");
@@ -215,20 +163,45 @@ public class JSoupSpider {
                 Element description = link.child(2);
                 Element articles = elements.select(".count > a").get(0);
                 Element follows = elements.select(".count > a").get(0);
-                topic.setAdmin_id(DataUtil.getUserId());
-                topic.setTopic_name(name.text());
+                topic.setAdminId(1L);
+                topic.setTopicName(name.text());
                 topic.setLogo(logo.attr("src"));
                 topic.setDescription(description.text());
+                topic.setHomepage("https://www.jianshu.com" + link.attr("href"));
                 String[] str = StringUtil.getDigital(articles.text());
                 topic.setArticles(Integer.parseInt(str[0]));
                 str = StringUtil.getDigital(follows.text());
                 topic.setFollows(Integer.parseInt(str[0]));
-                topic.setCreate_time(DataUtil.getPublishtime());
+                topic.setCreateTime(DataUtil.getCreateTime());
                 topicList.add(topic);
             });
-
         }
         return topicList;
-
     }
+
+    public static List<Book> getBooks() {
+        ArrayList<Book> books = new ArrayList<>();
+//        new Thread(() -> {
+//            Document document = null;
+//            try {
+//                document = Jsoup.connect("https://search.jd.com/Search?keyword=Java&enc=utf-8&wq=Java&pvid=65629c406a7b42a3abaf09a5e0604c9f").get();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            assert document != null;
+//            Element goodsList = document.getElementById("J_goodsList");
+//            Element glWrap = goodsList.child(0);
+//            Elements glItem = glWrap.getElementsByClass("gl-item");
+////            System.out.println(glItem.size());
+//            glItem.forEach(item->{
+//                Element glItemWrap = item.child(0);
+//                System.out.println(glItemWrap.html());
+//                Element img = glItemWrap.select(".p-img a img").get(0);
+//                System.out.println(img.attr("src"));
+//            });
+//        }).start();
+        return books;
+    }
+
+
 }

@@ -18,7 +18,8 @@ public interface UserService {
      * @param userDto
      * @return
      */
-    Map<String,Object> signIn(UserDto userDto);
+    /*Map<String,Object> signIn(UserDto userDto);*/
+    Result signIn(UserDto userDto);
 
     /**
      * 用户注册

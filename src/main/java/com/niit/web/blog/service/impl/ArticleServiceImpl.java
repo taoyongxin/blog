@@ -2,7 +2,6 @@ package com.niit.web.blog.service.impl;
 
 import com.niit.web.blog.dao.ArticleDao;
 import com.niit.web.blog.domain.vo.ArticleVo;
-import com.niit.web.blog.entity.Article;
 import com.niit.web.blog.factory.DaoFactory;
 import com.niit.web.blog.service.ArticleService;
 import com.niit.web.blog.util.Result;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,35 +23,7 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleDao articleDao = DaoFactory.getArticleDaoInstance();
     private static Logger logger = LoggerFactory.getLogger(ArticleServiceImpl.class);
 
-    /**
-     * 查询所有书籍
-     * @return
-     */
-    @Override
-    public List<Article> listarticle() {
-        List<Article> articles = null;
-        try {
-            articles = articleDao.selectAll();
-        } catch (SQLException e) {
-            System.err.println("查询所有书籍操作出现异常");
-        }
-        return articles;
-    }
 
-    /**
-     * 通过文章表的user_id查询用户表的该用户的昵称
-     * @return
-     */
-    @Override
-    public List<ArticleVo> getAuthorNickName() {
-        List<ArticleVo> articleVoList= new ArrayList<>(20);
-        try {
-            articleVoList = articleDao.selectAuthorNickName();
-        } catch (SQLException e) {
-            logger.error("利用文章id查询用户昵称失败");
-        }
-        return articleVoList;
-    }
 
     /**
      * 查询指定id的文章信息

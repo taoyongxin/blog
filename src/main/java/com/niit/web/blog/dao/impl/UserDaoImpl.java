@@ -114,7 +114,11 @@ public class UserDaoImpl implements UserDao {
         PreparedStatement pstmt = connection.prepareStatement(sql);
         pstmt.setString(1,mobile);
         ResultSet rs = pstmt.executeQuery();
-        User user = BeanHandler.convertUser(rs).get(0);
+        List<User> userList = BeanHandler.convertUser(rs);
+        User user = null;
+        if (userList.size()!=0){
+            user = userList.get(0);
+        }
         DbUtil.close(connection,pstmt,rs);
         return user;
     }

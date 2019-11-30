@@ -27,10 +27,17 @@ public class User {
     private LocalDate birthday;
     private String address;
     private String introduction;
+    private String banner;
+    private String email;
     private String homepage;
-    private int follows;
-    private int fans;
-    private int articles;
+    private Integer follows;
+    private Integer fans;
+    private Integer articles;
     private LocalDateTime createTime;
     private Short status;
+
+    public User(String mobile, String password) {
+        this.mobile = mobile;
+        this.password = password;
+    }
 }

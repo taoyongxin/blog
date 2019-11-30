@@ -4,10 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.niit.web.blog.domain.dto.UserDto;
 import com.niit.web.blog.factory.ServiceFactory;
+import com.niit.web.blog.listener.MySessionContext;
 import com.niit.web.blog.service.UserService;
-import com.niit.web.blog.util.Message;
-import com.niit.web.blog.util.ResponseObject;
-import com.niit.web.blog.util.Result;
+import com.niit.web.blog.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,16 +36,26 @@ public class UserController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String reqPath = req.getRequestURI().trim();
-        if ("/sign-in".equals(reqPath)){
+        String uri = req.getRequestURI().trim();
+        switch (uri) {
+            case UrlPatten.USER_SIGN_IN:
+                signIn(req,resp);
+                break;
+            case UrlPatten.USER_SIGN_UP:
+                signUp(req, resp);
+                break;
+            default:
+        }
+
+        /*if ("/sign-in".equals(reqPath)){
             signIn(req,resp);
         }else if ("/sign-up".equals(reqPath)){
             System.out.println("进入此处");
             signUp(req,resp);
-        }
+        }*/
     }
     private void signIn(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        BufferedReader reader = req.getReader();
+        /*BufferedReader reader = req.getReader();
         StringBuilder stringBuilder = new StringBuilder();
         String line = null;
         while ((line = reader.readLine()) != null){
@@ -64,7 +74,29 @@ public class UserController extends HttpServlet {
         }
         PrintWriter out = resp.getWriter();
         out.print(gson.toJson(ro));
-        out.close();
+        out.close();*/
+
+        String requestBody = HttpUtil.getRequestBody(req);
+        logger.info("登录用户信息："+requestBody);
+        Gson gson = new GsonBuilder().create();
+        UserDto userDto = gson.fromJson(requestBody,UserDto.class);
+        //客户端输入的验证码
+        String inputCode = userDto.getCode().trim();
+        //取得客户端请求头里带来的token
+        String sessionId = req.getHeader("Access-Token");
+        //从自定义的监听代码中取得之前的session对象
+        MySessionContext myc = MySessionContext.getInstance();
+        HttpSession session = myc.getSession(sessionId);
+        //取得当时存入的验证码
+        String correctCode = session.getAttribute("code").toString();
+        //忽略大小些对比
+        if (inputCode.equalsIgnoreCase(correctCode)){
+            HttpUtil.getResponseBody(resp,userService.signIn(userDto));
+            //验证码正确进入登录业务逻辑调用
+        } else {
+            //验证码错误，直接将错误的信息返回给客户端，不要继续登录流程了
+            HttpUtil.getResponseBody(resp,Result.failure(ResultCode.USER_VERIFY_CODE_ERROR));
+        }
     }
 
     protected void signUp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

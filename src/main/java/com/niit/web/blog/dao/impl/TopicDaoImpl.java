@@ -27,29 +27,29 @@ import java.util.List;
 public class TopicDaoImpl implements TopicDao {
    private static Logger logger = LoggerFactory.getLogger(TopicDaoImpl.class);
     @Override
-    public int[] bathInsert(List<Topic> topicList) throws SQLException {
+    public void batchInsert(List<Topic> topicList) throws SQLException {
         Connection connection = DbUtil.getConnection();
         connection.setAutoCommit(false);
-        String sql = "INSERT INTO t_topic (admin_id,topic_name,logo,description,articles,follows,create_time) VALUES (?,?,?,?,?,?,?)";
-        PreparedStatement pstmt = connection.prepareStatement(sql);
+        String sql = "INSERT INTO t_topic (admin_id,topic_name,logo,description,homepage,articles,follows,create_time) VALUES (?,?,?,?,?,?,?,?) ";
+        PreparedStatement pst = connection.prepareStatement(sql);
         topicList.forEach(topic -> {
             try {
-                pstmt.setLong(1,topic.getAdmin_id());
-                pstmt.setString(2,topic.getTopic_name());
-                pstmt.setString(3,topic.getLogo());
-                pstmt.setString(4,topic.getDescription());
-                pstmt.setInt(5,topic.getArticles());
-                pstmt.setInt(6,topic.getFollows());
-                pstmt.setObject(7,topic.getCreate_time());
-                pstmt.addBatch();
+                pst.setLong(1, topic.getAdminId());
+                pst.setString(2, topic.getTopicName());
+                pst.setString(3, topic.getLogo());
+                pst.setString(4, topic.getDescription());
+                pst.setString(5, topic.getHomepage());
+                pst.setInt(6, topic.getArticles());
+                pst.setInt(7, topic.getFollows());
+                pst.setObject(8, topic.getCreateTime());
+                pst.addBatch();
             } catch (SQLException e) {
                 logger.error("批量加入专题数据产生异常");
             }
         });
-        int[] result = pstmt.executeBatch();
+        pst.executeBatch();
         connection.commit();
-        DbUtil.close(connection,pstmt,null);
-        return result;
+        DbUtil.close(connection, pst);
     }
 
     @Override
@@ -111,30 +111,32 @@ public class TopicDaoImpl implements TopicDao {
         }
         DbUtil.close(connection,pstmt, rs);
         return topicVo;*/
-       Connection connection = DbUtil.getConnection();
-       //查询专题详情，包含专题表信息，管理员简要信息，文章列表，关注人列表
-       String sql = "SELECT a.*,b.id,b.nickname,b.avatar "+
-               "FROM t_topic a " +
-               "LEFT JOIN t_user b " +
-               "ON a.admin_id = b.id " +
-               "WHERE a.id = ? ";
-       PreparedStatement pstmt = connection.prepareStatement(sql);
-       pstmt.setLong(1,id);
-        ResultSet rs = pstmt.executeQuery();
+        Connection connection = DbUtil.getConnection();
+        //查询专题详情，包括专题表信息，管理员简要信息，文章列表，关注人列表
+        String sql = "SELECT a.*,b.id,b.nickname,b.avatar " +
+                "FROM t_topic a " +
+                "LEFT JOIN t_user b " +
+                "ON a.admin_id = b.id " +
+                "WHERE a.id = ?  ";
+        PreparedStatement pst = connection.prepareStatement(sql);
+        pst.setLong(1, id);
+        ResultSet rs = pst.executeQuery();
         TopicVo topicVo = null;
-        if (rs.next()){
+        if (rs.next()) {
             topicVo = new TopicVo();
             //专题基本信息
             Topic topic = new Topic();
             topic.setId(rs.getLong("id"));
-            topic.setAdmin_id(rs.getLong("admin_id"));
-            topic.setTopic_name(rs.getString("topic_name"));
+            topic.setAdminId(rs.getLong("admin_id"));
+            topic.setTopicName(rs.getString("topic_name"));
             topic.setLogo(rs.getString("logo"));
             topic.setDescription(rs.getString("description"));
+            topic.setHomepage(rs.getString("homepage"));
             topic.setArticles(rs.getInt("articles"));
             topic.setFollows(rs.getInt("follows"));
-            topic.setCreate_time(rs.getTimestamp("create_time").toLocalDateTime());
+            topic.setCreateTime(rs.getTimestamp("create_time").toLocalDateTime());
             topicVo.setTopic(topic);
+
             //管理员基本信息
             User admin = new User();
             admin.setId(rs.getLong("admin_id"));
@@ -142,7 +144,7 @@ public class TopicDaoImpl implements TopicDao {
             admin.setAvatar(rs.getString("avatar"));
             topicVo.setAdmin(admin);
         }
-        DbUtil.close(connection,pstmt,rs);
+        DbUtil.close(connection, pst, rs);
         return topicVo;
     }
 
@@ -175,6 +177,35 @@ public class TopicDaoImpl implements TopicDao {
         ResultSet resultSet = pstmt.executeQuery();
         List<Topic> topicList = BeanHandler.convertTopic(resultSet);
         DbUtil.close(connection,pstmt,resultSet);
+        return topicList;
+    }
+
+    @Override
+    public List<Topic> selectByPage(int currentPage, int count) throws SQLException {
+        Connection connection = DbUtil.getConnection();
+        //分页语句的两个参数，分别表示当前页第一行记录的索引，每页的数据量
+        //比如每页10条数据，第一页0-9，第二页10-19，从而可以推算一下关系
+        String sql = "SELECT * FROM t_topic  ORDER BY id LIMIT ?,? ";
+        PreparedStatement pst = connection.prepareStatement(sql);
+        pst.setInt(1, (currentPage - 1) * count);
+        pst.setInt(2, count);
+        ResultSet rs = pst.executeQuery();
+        List<Topic> topicList = BeanHandler.convertTopic(rs);
+        DbUtil.close(connection, pst, rs);
+        return topicList;
+    }
+
+    @Override
+    public List<Topic> selectByKeywords(String keywords) throws SQLException {
+        Connection connection = DbUtil.getConnection();
+        String sql = "SELECT * FROM t_topic " +
+                "WHERE topic_name LIKE ?  OR description LIKE ? ";
+        PreparedStatement pst = connection.prepareStatement(sql);
+        pst.setString(1, "%" + keywords + "%");
+        pst.setString(2, "%" + keywords + "%");
+        ResultSet rs = pst.executeQuery();
+        List<Topic> topicList = BeanHandler.convertTopic(rs);
+        DbUtil.close(connection, pst, rs);
         return topicList;
     }
 

@@ -5,17 +5,20 @@ import com.niit.web.blog.factory.ServiceFactory;
 import com.niit.web.blog.util.Result;
 import org.junit.Test;
 
-import java.util.Map;
-
 public class UserServiceTest {
     private UserService userService = ServiceFactory.getUserServiceInstance();
 
 
     @Test
     public void signIn() {
-        UserDto userDto = new UserDto("13908706554","7081a432bf709392e990207ecfc4b410");
+        UserDto userDao = new UserDto();
+        userDao.setMobile("13908706554");
+        userDao.setPassword("111");
+        Result result = userService.signIn(userDao);
+        System.out.println("code:"+result.getCode()+",msg"+result.getMsg());
+        /*UserDto userDto = new UserDto("13908706554","7081a432bf709392e990207ecfc4b410");
         Map<String,Object> map = userService.signIn(userDto);
-        System.out.println(map);
+        System.out.println(map);*/
     }
 
     @Test
