@@ -40,10 +40,21 @@ public interface UserService {
      * @return
      */
    /* List<User> listHotUsers();*/
-
     Result getHotUsers();
-
-
+    /**
+     * 获取分页用户信息
+     * @param currentPage
+     * @param count
+     * @return Result
+     */
+    Result selectByPage(int currentPage,int count);
+    /**
+     * 根据昵称或简介模糊搜索用户
+     *
+     * @param keywords
+     * @return Result
+     */
+    Result selectByKeywords(String keywords);
 
     Result getUser(long id);
 }

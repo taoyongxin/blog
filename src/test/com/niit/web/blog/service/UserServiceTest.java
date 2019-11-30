@@ -12,7 +12,7 @@ public class UserServiceTest {
     @Test
     public void signIn() {
         UserDto userDao = new UserDto();
-        userDao.setMobile("13908706554");
+        userDao.setMobile("13917310803");
         userDao.setPassword("111");
         Result result = userService.signIn(userDao);
         System.out.println("code:"+result.getCode()+",msg"+result.getMsg());
@@ -20,17 +20,26 @@ public class UserServiceTest {
         Map<String,Object> map = userService.signIn(userDto);
         System.out.println(map);*/
     }
-
+    @Test
+    public void selectByKeywords() {
+        Result result = userService.selectByKeywords("互联网");
+        System.out.println(result);
+    }
+    @Test
+    public void getUsersByPage() {
+        Result result = userService.selectByPage(2,10);
+        System.out.println(result.getData());
+    }
     @Test
     public void getHotUsers() {
         Result result = userService.getHotUsers();
         System.out.println(result);
     }
-    @Test
+   /* @Test
     public void ListAllUsers() {
         Result result = userService.getAllUsers();
         System.out.println(result);
-    }
+    }*/
 
     @Test
     public void getUser() {

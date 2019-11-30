@@ -47,7 +47,11 @@ public class UserDaoTest {
         List<User> userList = userDao.selectHotUsers();
         userList.forEach(user -> System.out.println(user));
     }
-
+    @Test
+    public void selectByPage() throws SQLException{
+        List<User> userVoList = userDao.selectByPage(1, 10);
+        userVoList.forEach(System.out::println);
+    }
     @Test
     public void getUser() throws SQLException {
         UserVo userVo = userDao.getUser(1);

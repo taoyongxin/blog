@@ -29,7 +29,7 @@ public class UserVo {
     private LocalDateTime create_time;*/
 
     private User user;
-    private List<ArticleVo> articleVoList;
+    private List<ArticleVo> articleList;
     private List<Topic> topicList;
     private List<User> fansList;
 }

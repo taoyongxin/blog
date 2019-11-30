@@ -1,7 +1,9 @@
 package com.niit.web.blog.service.impl;
 
+import com.niit.web.blog.dao.ArticleDao;
 import com.niit.web.blog.dao.UserDao;
 import com.niit.web.blog.domain.dto.UserDto;
+import com.niit.web.blog.domain.vo.ArticleVo;
 import com.niit.web.blog.domain.vo.UserVo;
 import com.niit.web.blog.entity.User;
 import com.niit.web.blog.factory.DaoFactory;
@@ -27,6 +29,7 @@ import java.util.Map;
  **/
 public class UserServiceImpl implements UserService {
     private UserDao userDao = DaoFactory.getUserDaoInstance();
+    private ArticleDao articleDao = DaoFactory.getArticleDaoInstance();
     private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Override
     public Result signIn(UserDto userDto) {
@@ -119,6 +122,37 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public Result selectByPage(int currentPage, int count) {
+        List<User> userList = null;
+        try {
+            userList = userDao.selectByPage(currentPage, count);
+        } catch (
+                SQLException e) {
+            logger.error("分页查询用户出现异常");
+        }
+        if (userList != null) {
+            return Result.success(userList);
+        } else {
+            return Result.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
+    }
+
+    @Override
+    public Result selectByKeywords(String keywords) {
+        List<User> userList = null;
+        try {
+            userList = userDao.selectByKeywords(keywords);
+        } catch (SQLException e) {
+            logger.error("根据关键字查询用户出现异常");
+        }
+        if (userList != null) {
+            return Result.success(userList);
+        } else {
+            return Result.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
+    }
+
 
 
    /* @Override
@@ -145,17 +179,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result getUser(long id) {
-        UserVo user = null;
+        UserVo userVo = null;
         try {
-            user = userDao.getUser(id);
+            userVo = userDao.getUser(id);
         } catch (SQLException e) {
-            logger.error("根据id查询指定用户详情出现异常");
+            logger.error("根据id获取用户详情出现异常");
         }
-        if(user != null){
-            return  Result.success(user);
-        }else {
-            return Result.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        if (userVo != null) {
+            try {
+                List<ArticleVo> articleVoList = articleDao.selectByUserId(id);
+                userVo.setArticleList(articleVoList);
+                return Result.success(userVo);
+            } catch (SQLException e) {
+                logger.error("根据用户id获取文章列表数据出现异常");
+            }
         }
+        return Result.failure(ResultCode.RESULT_CODE_DATA_NONE);
     }
 
 
